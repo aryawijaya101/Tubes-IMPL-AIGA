@@ -1,7 +1,7 @@
 USE field_booking_db;
-DROP TABLE IF EXISTS fields_db;
+DROP TABLE IF EXISTS tbl_fields;
 
-CREATE TABLE fields_db(
+CREATE TABLE tbl_fields(
     field_id INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name_field VARCHAR(100) NOT NULL,
     type_field VARCHAR(50) NOT NULL,
