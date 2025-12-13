@@ -12,11 +12,14 @@ public class DatabaseConnection {
     public static Connection getConnection() {
         Connection conn = null;
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
 
         } catch (SQLException e){
             System.err.println("Error: Gagal terhubung ke Database!.");
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         return conn;
