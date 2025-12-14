@@ -2,11 +2,13 @@ package controller;
 
 import controller.booking.BookingController;
 import controller.lapangan.FieldController;
+import controller.lapangan.FieldUserController;
 import controller.maintenance.MaintenanceController;
 import model.entity.User;
 import model.login.LoginDAO;
 import view.MainDashboard;
 import view.booking.ManageBookingView;
+import view.lapangan.ListFieldView;
 import view.lapangan.ManageFieldView;
 import view.login.LoginView;
 import view.maintenance.MaintenanceView;
@@ -76,6 +78,16 @@ public class LoginController {
                 ManageBookingView view = new ManageBookingView();
                 new BookingController(view);
                 view.setVisible(true);
+            });
+        }
+
+        // KHUSUS MEMBER
+        // 4. Tampilan List Lapangan
+        if (dashboard.getbtnTampilkanListLapangan() != null) {
+            dashboard.getbtnTampilkanListLapangan().addActionListener(e -> {
+                 ListFieldView view = new ListFieldView();
+                 new FieldUserController(view);
+                 view.setVisible(true);
             });
         }
 
