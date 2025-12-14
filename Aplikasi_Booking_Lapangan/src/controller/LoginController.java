@@ -1,6 +1,7 @@
 package controller;
 
 import controller.booking.BookingController;
+import controller.booking.RiwayatBookingController;
 import controller.lapangan.FieldController;
 import controller.lapangan.FieldUserController;
 import controller.maintenance.MaintenanceController;
@@ -10,6 +11,7 @@ import view.MainDashboard;
 import view.booking.ManageBookingView;
 import view.lapangan.ListFieldView;
 import view.lapangan.ManageFieldView;
+import view.lapangan.RiwayatBooking;
 import view.login.LoginView;
 import view.maintenance.MaintenanceView;
 
@@ -88,6 +90,14 @@ public class LoginController {
                  ListFieldView view = new ListFieldView();
                  new FieldUserController(view);
                  view.setVisible(true);
+            });
+        }
+        // 5. Tampilan Riwayat Booking
+        if (dashboard.getBtnTampilkanRiwayatBooking() != null) {
+            dashboard.getBtnTampilkanRiwayatBooking().addActionListener(e -> {
+                RiwayatBooking view = new RiwayatBooking();
+                new RiwayatBookingController(view);
+                view.setVisible(true);
             });
         }
 

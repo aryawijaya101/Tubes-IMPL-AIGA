@@ -1,18 +1,25 @@
-package controller.lapangan;
+package controller.booking;
 
+import model.entity.Booking;
+import model.booking.BookingDAO;
+import model.entity.User;
+import model.user.UserDAO;
 import model.entity.Lapangan;
 import model.lapangan.LapanganDAO;
-import view.lapangan.ListFieldView;
+import view.booking.ManageBookingView;
 import view.lapangan.RiwayatBooking;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class FieldUserController {
-    private ListFieldView view;
+public class RiwayatBookingController {
+
+    private RiwayatBooking view;
     private LapanganDAO dao;
 
-    public FieldUserController(ListFieldView view) {
+    public RiwayatBookingController(RiwayatBooking view) {
         this.view = view;
         this.dao = new LapanganDAO();
 
@@ -31,7 +38,6 @@ public class FieldUserController {
         view.getBtnSearch().addActionListener(e -> searchLapangan());
     }
 
-    // LOAD DATA (READ)
     private void loadData() {
         // Ambil data dari database via DAO
         List<Lapangan> list = dao.getAllLapangan();
@@ -54,7 +60,6 @@ public class FieldUserController {
         }
     }
 
-    // SEARCH (FILTER TABEL)
     private void searchLapangan() {
         String keyword = view.getTxtSearch().getText().toLowerCase();
         // Filter row tabel (Client Side) atau Panggil DAO search (Server Side)
@@ -62,4 +67,7 @@ public class FieldUserController {
         // (Untuk MVP, refresh data saja sudah cukup jika search kosong)
         loadData();
     }
+
+
+
 }
