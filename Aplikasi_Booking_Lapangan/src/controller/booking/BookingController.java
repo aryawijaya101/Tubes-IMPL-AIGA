@@ -7,6 +7,7 @@ import model.user.UserDAO;
 import model.entity.Lapangan;
 import model.lapangan.LapanganDAO;
 import view.booking.ManageBookingView;
+import view.lapangan.RiwayatBooking;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
