@@ -1,4 +1,4 @@
-package view.Lapangan;
+package view.lapangan;
 
 import javax.swing.*;
 import java.awt.*;

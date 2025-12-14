@@ -1,4 +1,4 @@
-package model.Lapangan;
+package model.lapangan;
 
 import database.DatabaseConnection;
 import model.entity.Lapangan;

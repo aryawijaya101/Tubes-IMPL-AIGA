@@ -1,4 +1,4 @@
-package view.kelolaUser;
+package view.user;
 
 import javax.swing.*;
 import java.awt.*;

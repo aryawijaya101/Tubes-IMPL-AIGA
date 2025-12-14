@@ -1,9 +1,9 @@
-package controller.kelolaUser;
+package controller.user;
 
-import model.Entity.User;
-import model.User.UserDAO;
-import view.kelolaUser.ManageUserView;
-import view.kelolaUser.UserFormDialog;
+import model.user.UserDAO;
+import model.entity.User;
+import view.user.ManageUserView;
+import view.user.UserFormDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

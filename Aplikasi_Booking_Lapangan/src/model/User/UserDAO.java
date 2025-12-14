@@ -1,11 +1,11 @@
-package model.User;
+package model.user;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import database.DatabaseConnection;
-import model.Entity.User;
+import model.entity.User;
 
 public class UserDAO {
     // 1. GET ALL USERS (Untuk ditampilkan di Tabel)
@@ -15,13 +15,13 @@ public class UserDAO {
         String sql = "SELECT * FROM tbl_users ORDER BY user_id ASC";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 User u = new User(
                         rs.getInt("user_id"),
-                        rs.getString("nama"),
+                        rs.getString("nama_lengkap"),
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("phone"),
@@ -39,7 +39,7 @@ public class UserDAO {
     public boolean insertUser(User user) {
         String sql = "INSERT INTO tbl_users (nama_lengkap, email, password, phone, role) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getNama());
             ps.setString(2, user.getEmail());
@@ -57,9 +57,9 @@ public class UserDAO {
     // 3. UPDATE USER (Edit Data)
     public boolean updateUser(User user) {
         // Kita tidak update password di sini agar aman, kecuali mau fitur reset password terpisah
-        String sql = "UPDATE tbl_users SET nama=?, email=?, phone=?, role=? WHERE user_id=?";
+        String sql = "UPDATE tbl_users SET nama_lengkap=?, email=?, phone=?, role=? WHERE user_id=?";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getNama());
             ps.setString(2, user.getEmail());
@@ -78,7 +78,7 @@ public class UserDAO {
     public boolean deleteUser(int userId) {
         String sql = "DELETE FROM tbl_users WHERE user_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, userId);
             return ps.executeUpdate() > 0;
@@ -86,5 +86,29 @@ public class UserDAO {
             System.err.println("Error Delete User: " + e.getMessage());
             return false;
         }
+    }
+
+    // 5. GET USER BY ID (Untuk Relasi)
+    public User getUserById(int userId) {
+        String sql = "SELECT * FROM tbl_users WHERE user_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new User(
+                    rs.getInt("user_id"),
+                    rs.getString("nama_lengkap"),
+                    rs.getString("email"),
+                    rs.getString("password"),
+                    rs.getString("phone"),
+                    rs.getString("role")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
