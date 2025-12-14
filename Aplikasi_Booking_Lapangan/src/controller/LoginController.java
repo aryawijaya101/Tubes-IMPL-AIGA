@@ -83,8 +83,8 @@ public class LoginController {
 
         // KHUSUS MEMBER
         // 4. Tampilan List Lapangan
-        if (dashboard.getbtnTampilkanListLapangan() != null) {
-            dashboard.getbtnTampilkanListLapangan().addActionListener(e -> {
+        if (dashboard.getBtnTampilkanListLapangan() != null) {
+            dashboard.getBtnTampilkanListLapangan().addActionListener(e -> {
                  ListFieldView view = new ListFieldView();
                  new FieldUserController(view);
                  view.setVisible(true);

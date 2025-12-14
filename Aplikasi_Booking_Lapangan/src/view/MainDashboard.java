@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainDashboard extends JFrame {
-    private JButton btnKelolaLapangan, btnKelolaJadwal, btnKelolaBooking, btnLaporan, btnLogout, btnTampilkanListLapangan;
+    private JButton btnKelolaLapangan, btnKelolaJadwal, btnKelolaBooking, btnLaporan, btnLogout, btnTampilkanListLapangan, btnTampilkanRiwayatBooking;
     private JLabel lblWelcome;
 
     public MainDashboard(User user) {
@@ -39,6 +39,7 @@ public class MainDashboard extends JFrame {
 
 //        MEMBER
         btnTampilkanListLapangan = new JButton("Tampilkan Daftar Lapangan");
+        btnTampilkanRiwayatBooking = new JButton("Tampilkan Riwayat Booking");
 
         // Logic Tampilan Berdasarkan Role (SRS: Akses Dashboard sesuai peran)
         if (user.getRole().equalsIgnoreCase("Admin")) {
@@ -51,6 +52,7 @@ public class MainDashboard extends JFrame {
             menuPanel.add(btnKelolaJadwal);
         } else if (user.getRole().equalsIgnoreCase("Member")) {
             menuPanel.add(btnTampilkanListLapangan);
+            menuPanel.add(btnTampilkanRiwayatBooking);
         } else {
             // Member/Guest
             menuPanel.add(new JLabel("Menu Member belum dibuat"));
@@ -64,6 +66,8 @@ public class MainDashboard extends JFrame {
     public JButton getBtnKelolaLapangan() { return btnKelolaLapangan; }
     public JButton getBtnKelolaJadwal() { return btnKelolaJadwal; }
     public JButton getBtnKelolaBooking() { return btnKelolaBooking; }
-    public JButton getbtnTampilkanListLapangan() { return btnTampilkanListLapangan; }
+    public JButton getBtnTampilkanListLapangan() { return btnTampilkanListLapangan; }
+    public JButton getBtnTampilkanRiwayatBooking() { return btnTampilkanRiwayatBooking; }
     public JButton getBtnLogout() { return btnLogout; }
 }
+
