@@ -1,4 +1,4 @@
-package model.lapangan;
+package model.Lapangan;
 
 import database.DatabaseConnection;
 import model.entity.Lapangan;
@@ -16,7 +16,7 @@ public class LapanganDAO {
         String sql = "INSERT INTO tbl_fields (name_field, location_field, type_field, price_per_hour, status_field) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setString(1, lapangan.getName());
             ps.setString(2, lapangan.getLocation());
@@ -38,8 +38,8 @@ public class LapanganDAO {
         String sql = "SELECT * FROM tbl_fields ORDER BY field_id ASC";
 
         try (Connection conn = DatabaseConnection.getConnection();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 // Pakai Constructor Lengkap dari Entity Lapangan

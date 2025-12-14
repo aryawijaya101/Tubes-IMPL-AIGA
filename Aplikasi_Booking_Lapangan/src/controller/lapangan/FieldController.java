@@ -1,9 +1,9 @@
 package controller.lapangan;
 
 import model.entity.Lapangan;
-import model.lapangan.LapanganDAO;
-import view.lapangan.ManageFieldView;
-import view.lapangan.FieldFormDialog;
+import model.Lapangan.LapanganDAO;
+import view.Lapangan.ManageFieldView;
+import view.Lapangan.FieldFormDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

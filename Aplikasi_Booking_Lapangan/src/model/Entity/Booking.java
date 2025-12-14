@@ -1,9 +1,9 @@
-package model.entity;
+package model.Entity;
 
 import java.sql.Timestamp;
 import java.sql.Date;
 
-public class booking {
+public class Booking {
     private int bookingId;
     private int userId;
     private int fieldId;
@@ -14,10 +14,10 @@ public class booking {
     private String status;
 
 
-    public booking() {}
+    public Booking() {}
 
 
-    public booking(int bookingId, int userId, int fieldId, Date bookingDate, Timestamp startTime, Timestamp endTime, double totalPrice, String status) {
+    public Booking(int bookingId, int userId, int fieldId, Date bookingDate, Timestamp startTime, Timestamp endTime, double totalPrice, String status) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.fieldId = fieldId;
@@ -28,7 +28,7 @@ public class booking {
         this.status = status;
     }
 
-    public booking(int userId, int fieldId, Date bookingDate, Timestamp startTime, Timestamp endTime, double totalPrice) {
+    public Booking(int userId, int fieldId, Date bookingDate, Timestamp startTime, Timestamp endTime, double totalPrice) {
         this.userId = userId;
         this.fieldId = fieldId;
         this.bookingDate = bookingDate;

@@ -1,5 +1,8 @@
-import view.lapangan.ManageFieldView;
+import controller.kelolaUser.ManageUserController;
+import view.Lapangan.ManageFieldView;
 import controller.lapangan.FieldController;
+import view.kelolaUser.ManageUserView;
+
 import javax.swing.SwingUtilities;
 
 public class Main {
@@ -8,10 +11,10 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             
             // Siapkan View
-            ManageFieldView view = new ManageFieldView();
+            ManageUserView view = new ManageUserView();
             
             // Siapkan Controller (Controller otomatis megang View dan Model)
-            new FieldController(view);
+            new ManageUserController(view);
             
             // Tampilkan
             view.setVisible(true);
