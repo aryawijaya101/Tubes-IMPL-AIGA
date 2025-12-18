@@ -1,6 +1,4 @@
-import controller.LoginController;
-import view.booking.ManageBookingView;
-import controller.booking.BookingController;
+import controller.login.LoginController;
 import view.login.LoginView;
 
 import javax.swing.SwingUtilities;
