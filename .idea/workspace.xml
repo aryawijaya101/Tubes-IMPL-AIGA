@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b22d6b6-35d8-49a3-b3bd-31f459d9e8f4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Aplikasi_Booking_Lapangan/src/controller/booking/RiwayatBookingController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aplikasi_Booking_Lapangan/src/view/lapangan/RiwayatBooking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aplikasi_Booking_Lapangan/src/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aplikasi_Booking_Lapangan/src/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aplikasi_Booking_Lapangan/src/controller/booking/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aplikasi_Booking_Lapangan/src/controller/booking/BookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aplikasi_Booking_Lapangan/src/controller/lapangan/FieldUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aplikasi_Booking_Lapangan/src/controller/lapangan/FieldUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Aplikasi_Booking_Lapangan/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Aplikasi_Booking_Lapangan/controller/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Aplikasi_Booking_Lapangan/controller/booking/BookingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Aplikasi_Booking_Lapangan/controller/booking/BookingController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Aplikasi_Booking_Lapangan/controller/lapangan/FieldUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Aplikasi_Booking_Lapangan/controller/lapangan/FieldUserController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +38,7 @@
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "riwayat-booking",
+    "git-widget-placeholder": "detail-booking",
     "last_opened_file_path": "D:/Kuliah/Semester 5/Implementasi Perangkat Lunak/Tubes-IMPL-AIGA/Aplikasi_Booking_Lapangan",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
