@@ -4,6 +4,7 @@ import model.entity.Pembayaran;
 import database.DatabaseConnection; // Sesuaikan import ini
 
 import java.sql.*;
+import java.util.List;
 
 public class PembayaranDAO {
 
@@ -51,5 +52,30 @@ public class PembayaranDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<Pembayaran> getPembayaran() {
+        java.util.List<Pembayaran> list = new java.util.ArrayList<>();
+        String sql = "SELECT * FROM tbl_payments ORDER BY payment_date DESC";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Pembayaran p = new Pembayaran(
+                        rs.getInt("payment_id"),
+                        rs.getInt("booking_id"),
+                        rs.getTimestamp("payment_date"),
+                        rs.getDouble("amount"),
+                        rs.getString("method_payment"), // Pastikan sesuai nama kolom DB kamu
+                        rs.getString("status_payment")  // Pastikan sesuai nama kolom DB kamu
+                );
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error Get All Payments: " + e.getMessage());
+        }
+        return list;
     }
 }

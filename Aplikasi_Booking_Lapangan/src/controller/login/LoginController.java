@@ -14,6 +14,7 @@ import view.lapangan.ManageFieldView;
 import view.lapangan.RiwayatBooking;
 import view.login.LoginView;
 import view.maintenance.MaintenanceView;
+import view.pembayaran.KelolaPembayaranView;
 
 import javax.swing.*;
 
@@ -83,16 +84,6 @@ public class LoginController {
             });
         }
 
-        // KHUSUS MEMBER
-        // 4. Tampilan List Lapangan (Untuk Booking)
-//        if (dashboard.getBtnTampilkanListLapangan() != null) {
-//            dashboard.getBtnTampilkanListLapangan().addActionListener(e -> {
-//                ListFieldView view = new ListFieldView();
-//                // Pastikan FieldUserController juga nanti disesuaikan jika butuh user
-//                new FieldUserController(view);
-//                view.setVisible(true);
-//            });
-//        }
         // KHUSUS MEMBER - TAMPILKAN LIST LAPANGAN
         if (dashboard.getBtnTampilkanListLapangan() != null) {
             dashboard.getBtnTampilkanListLapangan().addActionListener(e -> {
@@ -124,5 +115,14 @@ public class LoginController {
             new LoginController(newLoginView);
             newLoginView.setVisible(true);
         });
+
+        if (dashboard.getBtnKelolaPembayaran() != null) {
+            dashboard.getBtnKelolaPembayaran().addActionListener(e -> {
+                // Panggil View dan Controller Pembayaran
+                view.pembayaran.KelolaPembayaranView view = new view.pembayaran.KelolaPembayaranView();
+                new controller.pembayaran.pembayaranController(view);
+                view.setVisible(true);
+            });
+        }
     }
 }

@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainDashboard extends JFrame {
-    private JButton btnKelolaLapangan, btnKelolaJadwal, btnKelolaBooking, btnLaporan, btnLogout, btnTampilkanListLapangan, btnTampilkanRiwayatBooking;
+    private JButton btnKelolaLapangan, btnKelolaJadwal, btnKelolaBooking, btnLaporan, btnLogout, btnTampilkanListLapangan, btnTampilkanRiwayatBooking, btnKelolaPembayaran;
     private JLabel lblWelcome;
 
     public MainDashboard(User user) {
@@ -34,6 +34,7 @@ public class MainDashboard extends JFrame {
         btnKelolaBooking = new JButton("Data Booking");
         btnLaporan = new JButton("Laporan Keuangan");
         btnLogout = new JButton("Logout");
+        btnKelolaPembayaran = new JButton("Kelola Pembayaran");
         btnLogout.setBackground(Color.RED);
         btnLogout.setForeground(Color.WHITE);
 
@@ -47,6 +48,7 @@ public class MainDashboard extends JFrame {
             menuPanel.add(btnKelolaJadwal);
             menuPanel.add(btnKelolaBooking);
             menuPanel.add(btnLaporan);
+            menuPanel.add(btnKelolaPembayaran);
         } else if (user.getRole().equalsIgnoreCase("Karyawan")) {
             menuPanel.add(btnKelolaLapangan);
             menuPanel.add(btnKelolaJadwal);
@@ -66,6 +68,8 @@ public class MainDashboard extends JFrame {
     public JButton getBtnKelolaLapangan() { return btnKelolaLapangan; }
     public JButton getBtnKelolaJadwal() { return btnKelolaJadwal; }
     public JButton getBtnKelolaBooking() { return btnKelolaBooking; }
+    public JButton getBtnKelolaPembayaran() { return btnKelolaPembayaran; }
+    public JButton getBtnLaporan() { return btnLaporan; }
     public JButton getBtnTampilkanListLapangan() { return btnTampilkanListLapangan; }
     public JButton getBtnTampilkanRiwayatBooking() { return btnTampilkanRiwayatBooking; }
     public JButton getBtnLogout() { return btnLogout; }
