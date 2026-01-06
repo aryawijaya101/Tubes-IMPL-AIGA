@@ -6,33 +6,30 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
-* Model/DAO (Data Access Object) Khusus untuk Modul Kelola Lapangan.
-* Menangani CRUD tabel 'fields'.
-*/
 public class LapanganDAO {
-    // CREATE (TAMBAH LAPANGAN BARU)
+
+    // CREATE
     public boolean insertLapangan(Lapangan lapangan) {
         String sql = "INSERT INTO tbl_fields (name_field, location_field, type_field, price_per_hour, status_field) VALUES (?, ?, ?, ?, ?)";
-        
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+
             ps.setString(1, lapangan.getName());
             ps.setString(2, lapangan.getLocation());
-            ps.setString(3, lapangan.getType()); // Futsal, Badminton, dll
+            ps.setString(3, lapangan.getType());
             ps.setDouble(4, lapangan.getPricePerHour());
-            ps.setString(5, lapangan.getStatus()); // Available, Maintenance
-            
+            ps.setString(5, lapangan.getStatus());
+
             return ps.executeUpdate() > 0;
-            
+
         } catch (SQLException e) {
             System.err.println("Error Insert Lapangan: " + e.getMessage());
             return false;
         }
     }
 
-    // READ (AMBIL SEMUA DATA LAPANGAN)
+    // READ ALL
     public List<Lapangan> getAllLapangan() {
         List<Lapangan> listLapangan = new ArrayList<>();
         String sql = "SELECT * FROM tbl_fields ORDER BY field_id ASC";
@@ -42,14 +39,13 @@ public class LapanganDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                // Pakai Constructor Lengkap dari Entity Lapangan
                 Lapangan l = new Lapangan(
-                    rs.getInt("field_id"),
-                    rs.getString("name_field"),
-                    rs.getString("location_field"),
-                    rs.getString("type_field"),
-                    rs.getDouble("price_per_hour"),
-                    rs.getString("status_field")
+                        rs.getInt("field_id"),
+                        rs.getString("name_field"),
+                        rs.getString("location_field"),
+                        rs.getString("type_field"),
+                        rs.getDouble("price_per_hour"),
+                        rs.getString("status_field")
                 );
                 listLapangan.add(l);
             }
@@ -59,31 +55,30 @@ public class LapanganDAO {
         return listLapangan;
     }
 
-    // UPDATE (UBAH DATA LAPANGAN)
+    // UPDATE
     public boolean updateLapangan(Lapangan lapangan) {
         String sql = "UPDATE tbl_fields SET name_field=?, location_field=?, type_field=?, price_per_hour=?, status_field=? WHERE field_id=?";
-        
+
         try (Connection conn = DatabaseConnection.getConnection();
-          PreparedStatement ps = conn.prepareStatement(sql)) {
-          
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, lapangan.getName());
             ps.setString(2, lapangan.getLocation());
             ps.setString(3, lapangan.getType());
             ps.setDouble(4, lapangan.getPricePerHour());
             ps.setString(5, lapangan.getStatus());
-            ps.setInt(6, lapangan.getFieldId()); // WHERE field_id = ...
-            
+            ps.setInt(6, lapangan.getFieldId());
+
             return ps.executeUpdate() > 0;
-            
+
         } catch (SQLException e) {
             System.err.println("Error Update Lapangan: " + e.getMessage());
             return false;
         }
     }
 
-    // DELETE (HAPUS LAPANGAN)
+    // DELETE
     public boolean deleteLapangan(int fieldId) {
-        // Cek dulu apakah lapangan sedang dipakai booking (Optional Logic)
         if (isLapanganBooked(fieldId)) {
             System.err.println("Gagal Hapus: Lapangan sedang ada booking aktif!");
             return false;
@@ -91,53 +86,80 @@ public class LapanganDAO {
 
         String sql = "DELETE FROM tbl_fields WHERE field_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, fieldId);
             return ps.executeUpdate() > 0;
-            
+
         } catch (SQLException e) {
             System.err.println("Error Delete Lapangan: " + e.getMessage());
             return false;
         }
     }
 
-    // Cek apakah lapangan ada di tabel booking dengan status 'Confirmed' atau 'Pending'
     private boolean isLapanganBooked(int fieldId) {
         String sql = "SELECT booking_id FROM tbl_bookings WHERE field_id = ? AND status IN ('Pending', 'Confirmed')";
         try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, fieldId);
             ResultSet rs = ps.executeQuery();
-            return rs.next(); // True jika ada booking
-            
+            return rs.next();
         } catch (SQLException e) {
             return false;
         }
     }
-    
-    // GET BY ID (Opsional, untuk Edit form nanti)
+
+    // GET BY ID
     public Lapangan getLapanganById(int id) {
         String sql = "SELECT * FROM tbl_fields WHERE field_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return new Lapangan(
-                    rs.getInt("field_id"),
-                    rs.getString("name_field"),
-                    rs.getString("location_field"),
-                    rs.getString("type_field"),
-                    rs.getDouble("price_per_hour"),
-                    rs.getString("status_field")
+                        rs.getInt("field_id"),
+                        rs.getString("name_field"),
+                        rs.getString("location_field"),
+                        rs.getString("type_field"),
+                        rs.getDouble("price_per_hour"),
+                        rs.getString("status_field")
                 );
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // === PERBAIKAN PADA METHOD INI ===
+    public List<Lapangan> cariLapangan(String keyword) {
+        List<Lapangan> list = new ArrayList<>();
+        // PERBAIKAN: Gunakan 'name_field' bukan 'name'
+        String sql = "SELECT * FROM tbl_fields WHERE name_field LIKE ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + keyword + "%");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                // PERBAIKAN: Gunakan nama kolom yang konsisten dengan tabel DB
+                Lapangan l = new Lapangan(
+                        rs.getInt("field_id"),
+                        rs.getString("name_field"),     // Sebelumnya: name
+                        rs.getString("location_field"), // Sebelumnya: location
+                        rs.getString("type_field"),     // Sebelumnya: type
+                        rs.getDouble("price_per_hour"),
+                        rs.getString("status_field")    // Sebelumnya: status
+                );
+                list.add(l);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

@@ -2,19 +2,18 @@ package controller.login;
 
 import controller.booking.BookingController;
 import controller.booking.RiwayatBookingController;
-import controller.lapangan.FieldController;
-import controller.lapangan.FieldUserController;
+import controller.lapangan.LapanganController;
+import controller.lapangan.LapanganUserController;
 import controller.maintenance.MaintenanceController;
 import model.entity.User;
 import model.login.LoginDAO;
 import view.MainDashboard;
 import view.booking.ManageBookingView;
-import view.lapangan.ListFieldView;
+import view.lapangan.DaftarLapnganMember;
 import view.lapangan.ManageFieldView;
 import view.lapangan.RiwayatBooking;
 import view.login.LoginView;
 import view.maintenance.MaintenanceView;
-import view.pembayaran.KelolaPembayaranView;
 
 import javax.swing.*;
 
@@ -61,7 +60,7 @@ public class LoginController {
         if (dashboard.getBtnKelolaLapangan() != null) {
             dashboard.getBtnKelolaLapangan().addActionListener(e -> {
                 ManageFieldView view = new ManageFieldView();
-                new FieldController(view);
+                new LapanganController(view);
                 view.setVisible(true);
             });
         }
@@ -88,9 +87,9 @@ public class LoginController {
         if (dashboard.getBtnTampilkanListLapangan() != null) {
             dashboard.getBtnTampilkanListLapangan().addActionListener(e -> {
                 // UPDATE DI SINI: Masukkan 'user' ke dalam constructor
-                ListFieldView view = new ListFieldView(user);
+                DaftarLapnganMember view = new DaftarLapnganMember(user);
 
-                new FieldUserController(view); // Pastikan ini tidak error
+                new LapanganUserController(view); // Pastikan ini tidak error
                 view.setVisible(true);
             });
         }

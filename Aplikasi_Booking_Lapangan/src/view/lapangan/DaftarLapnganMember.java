@@ -1,17 +1,14 @@
 package view.lapangan;
 
 import model.entity.User;
-import controller.lapangan.FieldPembayaranController;
+import controller.lapangan.LapanganPembayaranController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ListFieldView extends JFrame {
+public class DaftarLapnganMember extends JFrame {
 
     // VARIABEL USER
     private User currentUser;
@@ -23,7 +20,7 @@ public class ListFieldView extends JFrame {
     private JButton btnSearch;
 
     // UPDATE CONSTRUCTOR: TERIMA USER
-    public ListFieldView(User user) {
+    public DaftarLapnganMember(User user) {
         this.currentUser = user; // Simpan user yang login
 
         setTitle("Daftar Lapangan & Booking");
@@ -119,11 +116,11 @@ public class ListFieldView extends JFrame {
                     double price = Double.parseDouble(hargaStr);
 
                     // 1. Buat View
-                    FieldPembayaran paymentPage = new FieldPembayaran(fieldId, fieldName, price);
+                    PembayaranLapangan paymentPage = new PembayaranLapangan(fieldId, fieldName, price);
 
                     // 2. SAMBUNGKAN KE CONTROLLER (PENTING!)
                     // Kita oper currentUser ke controller ini
-                    new FieldPembayaranController(paymentPage, currentUser, fieldId);
+                    new LapanganPembayaranController(paymentPage, currentUser, fieldId);
 
                     paymentPage.setVisible(true);
 

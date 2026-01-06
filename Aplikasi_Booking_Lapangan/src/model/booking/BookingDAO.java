@@ -103,7 +103,7 @@ public class BookingDAO {
     // READ BY USER
     public List<Booking> getBookingsByUser(int userId) {
         List<Booking> list = new ArrayList<>();
-        String sql = "SELECT * FROM tbl_bookings WHERE user_id = ? ORDER BY booking_date DESC";
+        String sql = "SELECT * FROM tbl_bookings WHERE user_id = ? ORDER BY booking_id DESC";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

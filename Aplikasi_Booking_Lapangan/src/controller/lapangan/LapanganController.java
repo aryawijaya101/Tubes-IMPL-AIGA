@@ -9,11 +9,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
-public class FieldController {
+public class LapanganController {
     private ManageFieldView view;
     private LapanganDAO dao;
 
-    public FieldController(ManageFieldView view) {
+    public LapanganController(ManageFieldView view) {
         this.view = view;
         this.dao = new LapanganDAO();
 
