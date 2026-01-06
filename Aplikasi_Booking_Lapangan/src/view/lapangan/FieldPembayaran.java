@@ -7,17 +7,15 @@ import java.util.Date;
 
 public class FieldPembayaran extends JFrame {
 
-    // Data dari halaman sebelumnya
     private int fieldId;
     private double pricePerHour;
 
-    // Komponen Input
     private JTextField txtFieldName;
     private JTextField txtPrice;
-    private JTextField txtDate; // Format YYYY-MM-DD
+    private JTextField txtDate;
     private JComboBox<String> comboStartTime;
     private JComboBox<String> comboEndTime;
-    private JComboBox<String> comboPaymentMethod; // Sesuai Entity Pembayaran
+    private JComboBox<String> comboPaymentMethod;
     private JLabel lblTotalAmount;
     private JButton btnPay, btnCancel;
 
@@ -44,7 +42,7 @@ public class FieldPembayaran extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // 1. Nama Lapangan (Read Only)
+        // 1. Nama Lapangan
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Nama Lapangan:"), gbc);
         txtFieldName = new JTextField(fieldName);
@@ -52,7 +50,7 @@ public class FieldPembayaran extends JFrame {
         gbc.gridx = 1;
         formPanel.add(txtFieldName, gbc);
 
-        // 2. Harga per Jam (Read Only)
+        // 2. Harga
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Harga / Jam:"), gbc);
         txtPrice = new JTextField(String.valueOf(pricePerHour));
@@ -60,14 +58,14 @@ public class FieldPembayaran extends JFrame {
         gbc.gridx = 1;
         formPanel.add(txtPrice, gbc);
 
-        // 3. Tanggal Booking
+        // 3. Tanggal
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Tanggal (YYYY-MM-DD):"), gbc);
-        txtDate = new JTextField(new SimpleDateFormat("yyyy-MM-dd").format(new Date())); // Default hari ini
+        txtDate = new JTextField(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         gbc.gridx = 1;
         formPanel.add(txtDate, gbc);
 
-        // 4. Jam Mulai & Selesai
+        // 4. Jam
         gbc.gridx = 0; gbc.gridy = 3;
         formPanel.add(new JLabel("Jam Mulai:"), gbc);
         String[] hours = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"};
@@ -78,19 +76,19 @@ public class FieldPembayaran extends JFrame {
         gbc.gridx = 0; gbc.gridy = 4;
         formPanel.add(new JLabel("Jam Selesai:"), gbc);
         comboEndTime = new JComboBox<>(hours);
-        comboEndTime.setSelectedIndex(1); // Default 1 jam setelahnya
+        comboEndTime.setSelectedIndex(1);
         gbc.gridx = 1;
         formPanel.add(comboEndTime, gbc);
 
-        // 5. Metode Pembayaran (Sesuai Entity Pembayaran)
+        // 5. Metode
         gbc.gridx = 0; gbc.gridy = 5;
         formPanel.add(new JLabel("Metode Pembayaran:"), gbc);
-        String[] methods = {"Transfer Bank", "E-Wallet", "Cash", "Credit Card"};
+        String[] methods = {"Transfer", "e-Wallet", "Cash", "Debit Card", "QR"};
         comboPaymentMethod = new JComboBox<>(methods);
         gbc.gridx = 1;
         formPanel.add(comboPaymentMethod, gbc);
 
-        // 6. Total Bayar (Kalkulasi Otomatis Sederhana)
+        // 6. Total
         gbc.gridx = 0; gbc.gridy = 6;
         formPanel.add(new JLabel("Total Pembayaran:"), gbc);
         lblTotalAmount = new JLabel("Rp 0");
@@ -116,34 +114,19 @@ public class FieldPembayaran extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
 
         // --- EVENT LISTENER ---
-
-        // Listener Hitung Harga saat Jam Berubah
         comboStartTime.addActionListener(e -> calculateTotal());
         comboEndTime.addActionListener(e -> calculateTotal());
-
-        // Hitung awal saat buka
         calculateTotal();
 
-        // Tombol Cancel
         btnCancel.addActionListener(e -> dispose());
 
-        // Tombol Bayar (Placeholder Logic)
-        btnPay.addActionListener(e -> {
-            // Nanti di sini panggil Controller untuk simpan ke Tabel Booking & Pembayaran
-            JOptionPane.showMessageDialog(this,
-                    "Pembayaran Berhasil!\nMetode: " + comboPaymentMethod.getSelectedItem() +
-                            "\nTotal: " + lblTotalAmount.getText());
-            dispose();
-        });
+        // HAPUS LISTENER DUMMY DI SINI. Controller akan menangani btnPay.
     }
 
     private void calculateTotal() {
         try {
             int startIdx = comboStartTime.getSelectedIndex();
             int endIdx = comboEndTime.getSelectedIndex();
-
-            // Logic sederhana: Index combo box merepresentasikan urutan jam
-            // Jika jam selesai <= jam mulai, anggap tidak valid atau minimal 1 jam
             int duration = endIdx - startIdx;
 
             if (duration <= 0) {
@@ -157,5 +140,16 @@ public class FieldPembayaran extends JFrame {
         } catch (Exception ex) {
             lblTotalAmount.setText("Error");
         }
+    }
+
+    // --- GETTER UNTUK CONTROLLER ---
+    public String getDateInput() { return txtDate.getText(); }
+    public String getStartTime() { return (String) comboStartTime.getSelectedItem(); }
+    public String getEndTime() { return (String) comboEndTime.getSelectedItem(); }
+    public String getPaymentMethod() { return (String) comboPaymentMethod.getSelectedItem(); }
+    public JButton getBtnPay() { return btnPay; }
+    public double getTotalPrice() {
+        String text = lblTotalAmount.getText().replace("Rp ", "").replace(",", "");
+        try { return Double.parseDouble(text); } catch (Exception e) { return 0; }
     }
 }

@@ -5,86 +5,91 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class RiwayatBooking extends JFrame {
+
     // Komponen GUI
-    private JTable tableLapangan;
+    private JTable tableRiwayat;
     private DefaultTableModel tableModel;
-    private JButton btnRefresh, btnAdd, btnEdit, btnDelete;
+    private JButton btnRefresh; // Tombol CRUD dihapus karena ini halaman history
     private JTextField txtSearch;
     private JButton btnSearch;
 
     public RiwayatBooking() {
-        setTitle("Riwayat Booking");
-        setSize(900, 600);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Agar tidak menutup seluruh aplikasi
-        setLocationRelativeTo(null); // Posisi di tengah layar
+        setTitle("Riwayat Booking & Pembayaran Saya");
+        setSize(950, 600);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // PANEL ATAS (JUDUL & SEARCH)
+        // =================================================================
+        // 1. PANEL ATAS (JUDUL & SEARCH)
+        // =================================================================
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel lblTitle = new JLabel("Daftar Lapangan Yang Sudah di Booking");
+        JLabel lblTitle = new JLabel("Daftar Transaksi Berhasil");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 18));
 
         txtSearch = new JTextField(20);
-        btnSearch = new JButton("Cari");
+        btnSearch = new JButton("Cari ID/Nama");
 
         topPanel.add(lblTitle);
-        topPanel.add(Box.createHorizontalStrut(50)); // Spasi
-        topPanel.add(new JLabel("Cari Nama:"));
+        topPanel.add(Box.createHorizontalStrut(50));
+        topPanel.add(new JLabel("Cari:"));
         topPanel.add(txtSearch);
         topPanel.add(btnSearch);
 
         add(topPanel, BorderLayout.NORTH);
 
-        // PANEL TENGAH (TABEL DATA)
-        // Kolom sesuai Entity Lapangan
-        String[] columnNames = {"ID", "Nama Lapangan", "Lokasi", "Tipe", "Harga/Jam", "Status"};
+        // =================================================================
+        // 2. PANEL TENGAH (TABEL DATA)
+        // =================================================================
+        // PERUBAHAN KOLOM SESUAI REQUEST:
+        // 1. "Status" diganti "Waktu Main" (Jam Mulai - Selesai)
+        // 2. Ditambah "Waktu Pembayaran" di akhir
+        String[] columnNames = {
+                "ID Booking",
+                "Nama Lapangan",
+                "Tanggal Main",
+                "Waktu Main",      // Ex: "08:00 - 10:00"
+                "Total Bayar",
+                "Metode",
+                "Waktu Pembayaran" // Timestamp pembayaran dilakukan
+        };
 
-        // Model tabel agar tidak bisa diedit langsung di sel-nya
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return false; // Data riwayat tidak bisa diedit langsung
             }
         };
 
-        tableLapangan = new JTable(tableModel);
-        tableLapangan.setRowHeight(25); // Supaya baris agak renggang enak dibaca
-        JScrollPane scrollPane = new JScrollPane(tableLapangan);
+        tableRiwayat = new JTable(tableModel);
+        tableRiwayat.setRowHeight(30); // Sedikit lebih tinggi biar rapi
 
+        // Atur lebar kolom agar proporsional
+        tableRiwayat.getColumnModel().getColumn(0).setPreferredWidth(50);  // ID
+        tableRiwayat.getColumnModel().getColumn(1).setPreferredWidth(150); // Nama Lapangan
+        tableRiwayat.getColumnModel().getColumn(3).setPreferredWidth(100); // Waktu Main
+        tableRiwayat.getColumnModel().getColumn(6).setPreferredWidth(150); // Waktu Pembayaran
+
+        JScrollPane scrollPane = new JScrollPane(tableRiwayat);
         add(scrollPane, BorderLayout.CENTER);
 
-        // PANEL BAWAH (TOMBOL AKSI)
+        // =================================================================
+        // 3. PANEL BAWAH
+        // =================================================================
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         btnRefresh = new JButton("Refresh Data");
-        btnAdd = new JButton("Tambah Lapangan");
-        btnEdit = new JButton("Edit Lapangan");
-        btnDelete = new JButton("Hapus Lapangan");
+        btnRefresh.setBackground(new Color(52, 152, 219));
+        btnRefresh.setForeground(Color.WHITE);
 
-        // Warna tombol (Opsional, biar bagus dikit)
-        btnAdd.setBackground(new Color(46, 204, 113)); // Hijau
-        btnAdd.setForeground(Color.WHITE);
-
-        btnDelete.setBackground(new Color(231, 76, 60)); // Merah
-        btnDelete.setForeground(Color.WHITE);
-
-//        bottomPanel.add(btnRefresh);
-//        bottomPanel.add(btnAdd);
-//        bottomPanel.add(btnEdit);
-//        bottomPanel.add(btnDelete);
-//
-//        add(bottomPanel, BorderLayout.SOUTH);
+        bottomPanel.add(btnRefresh);
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    // GETTER (Supaya Controller bisa akses komponen ini)
-    public JTable getTableLapangan() { return tableLapangan; }
+    // GETTER
+    public JTable getTableRiwayat() { return tableRiwayat; }
     public DefaultTableModel getTableModel() { return tableModel; }
-
     public JButton getBtnRefresh() { return btnRefresh; }
-    public JButton getBtnAdd() { return btnAdd; }
-    public JButton getBtnEdit() { return btnEdit; }
-    public JButton getBtnDelete() { return btnDelete; }
-
     public JTextField getTxtSearch() { return txtSearch; }
     public JButton getBtnSearch() { return btnSearch; }
 }

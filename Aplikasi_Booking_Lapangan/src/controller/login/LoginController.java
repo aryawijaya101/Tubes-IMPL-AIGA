@@ -24,7 +24,7 @@ public class LoginController {
 
     public LoginController(LoginView view) {
         this.loginView = view;
-        this.loginDAO = new LoginDAO(); // Pakai DAO khusus Login
+        this.loginDAO = new LoginDAO();
 
         // Listener Tombol
         this.loginView.getBtnLogin().addActionListener(e -> processLogin());
@@ -43,8 +43,8 @@ public class LoginController {
 
         if (user != null) {
             JOptionPane.showMessageDialog(loginView, "Login Berhasil! Halo, " + user.getNama());
-            loginView.dispose(); // Tutup jendela login
-            openDashboard(user); // Buka dashboard
+            loginView.dispose();
+            openDashboard(user);
         } else {
             JOptionPane.showMessageDialog(loginView, "Email atau Password salah!", "Gagal", JOptionPane.ERROR_MESSAGE);
         }
@@ -56,7 +56,7 @@ public class LoginController {
 
         // --- LOGIC TOMBOL DASHBOARD ---
 
-        // 1. Lapangan
+        // 1. Lapangan (Admin/Owner)
         if (dashboard.getBtnKelolaLapangan() != null) {
             dashboard.getBtnKelolaLapangan().addActionListener(e -> {
                 ManageFieldView view = new ManageFieldView();
@@ -65,7 +65,7 @@ public class LoginController {
             });
         }
 
-        // 2. Jadwal
+        // 2. Jadwal (Admin/Owner)
         if (dashboard.getBtnKelolaJadwal() != null) {
             dashboard.getBtnKelolaJadwal().addActionListener(e -> {
                 MaintenanceView view = new MaintenanceView();
@@ -74,7 +74,7 @@ public class LoginController {
             });
         }
 
-        // 3. Booking
+        // 3. Booking (Admin)
         if (dashboard.getBtnKelolaBooking() != null) {
             dashboard.getBtnKelolaBooking().addActionListener(e -> {
                 ManageBookingView view = new ManageBookingView();
@@ -84,29 +84,44 @@ public class LoginController {
         }
 
         // KHUSUS MEMBER
-        // 4. Tampilan List Lapangan
+        // 4. Tampilan List Lapangan (Untuk Booking)
+//        if (dashboard.getBtnTampilkanListLapangan() != null) {
+//            dashboard.getBtnTampilkanListLapangan().addActionListener(e -> {
+//                ListFieldView view = new ListFieldView();
+//                // Pastikan FieldUserController juga nanti disesuaikan jika butuh user
+//                new FieldUserController(view);
+//                view.setVisible(true);
+//            });
+//        }
+        // KHUSUS MEMBER - TAMPILKAN LIST LAPANGAN
         if (dashboard.getBtnTampilkanListLapangan() != null) {
             dashboard.getBtnTampilkanListLapangan().addActionListener(e -> {
-                 ListFieldView view = new ListFieldView();
-                 new FieldUserController(view);
-                 view.setVisible(true);
-            });
-        }
-        // 5. Tampilan Riwayat Booking
-        if (dashboard.getBtnTampilkanRiwayatBooking() != null) {
-            dashboard.getBtnTampilkanRiwayatBooking().addActionListener(e -> {
-                RiwayatBooking view = new RiwayatBooking();
-                new RiwayatBookingController(view);
+                // UPDATE DI SINI: Masukkan 'user' ke dalam constructor
+                ListFieldView view = new ListFieldView(user);
+
+                new FieldUserController(view); // Pastikan ini tidak error
                 view.setVisible(true);
             });
         }
 
-        // 4. Logout (PENTING: Arahkan balik ke LoginController yang baru)
+        // 5. Tampilan Riwayat Booking (INI YANG DIPERBAIKI)
+        if (dashboard.getBtnTampilkanRiwayatBooking() != null) {
+            dashboard.getBtnTampilkanRiwayatBooking().addActionListener(e -> {
+                RiwayatBooking view = new RiwayatBooking();
+
+                // PERBAIKAN: Tambahkan parameter 'user' di sini
+                // Agar controller tahu history milik siapa yang harus diambil
+                new RiwayatBookingController(view, user);
+
+                view.setVisible(true);
+            });
+        }
+
+        // 6. Logout
         dashboard.getBtnLogout().addActionListener(e -> {
             dashboard.dispose();
-            // Kembali ke Login
             LoginView newLoginView = new LoginView();
-            new LoginController(newLoginView); // Panggil Controller ini lagi
+            new LoginController(newLoginView);
             newLoginView.setVisible(true);
         });
     }
