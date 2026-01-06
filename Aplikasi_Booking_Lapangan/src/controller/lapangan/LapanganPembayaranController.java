@@ -5,22 +5,22 @@ import model.entity.Pembayaran;
 import model.entity.User;
 import model.booking.BookingDAO;
 import model.pembayaran.PembayaranDAO;
-import view.lapangan.FieldPembayaran;
+import view.lapangan.PembayaranLapangan;
 
 import javax.swing.*;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class FieldPembayaranController {
+public class LapanganPembayaranController {
 
-    private FieldPembayaran view;
+    private PembayaranLapangan view;
     private User currentUser;
     private int fieldId;
     private BookingDAO bookingDAO;
     private PembayaranDAO pembayaranDAO;
 
-    public FieldPembayaranController(FieldPembayaran view, User user, int fieldId) {
+    public LapanganPembayaranController(PembayaranLapangan view, User user, int fieldId) {
         this.view = view;
         this.currentUser = user;
         this.fieldId = fieldId;

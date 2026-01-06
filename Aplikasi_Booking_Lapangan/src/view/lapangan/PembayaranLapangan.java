@@ -5,7 +5,7 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class FieldPembayaran extends JFrame {
+public class PembayaranLapangan extends JFrame {
 
     private int fieldId;
     private double pricePerHour;
@@ -19,7 +19,7 @@ public class FieldPembayaran extends JFrame {
     private JLabel lblTotalAmount;
     private JButton btnPay, btnCancel;
 
-    public FieldPembayaran(int fieldId, String fieldName, double pricePerHour) {
+    public PembayaranLapangan(int fieldId, String fieldName, double pricePerHour) {
         this.fieldId = fieldId;
         this.pricePerHour = pricePerHour;
 

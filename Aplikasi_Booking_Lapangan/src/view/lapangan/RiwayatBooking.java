@@ -1,6 +1,7 @@
 package view.lapangan;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer; // Import ini
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
@@ -9,7 +10,7 @@ public class RiwayatBooking extends JFrame {
     // Komponen GUI
     private JTable tableRiwayat;
     private DefaultTableModel tableModel;
-    private JButton btnRefresh; // Tombol CRUD dihapus karena ini halaman history
+    private JButton btnRefresh;
     private JTextField txtSearch;
     private JButton btnSearch;
 
@@ -20,9 +21,7 @@ public class RiwayatBooking extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // =================================================================
-        // 1. PANEL ATAS (JUDUL & SEARCH)
-        // =================================================================
+        // 1. PANEL ATAS
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel lblTitle = new JLabel("Daftar Transaksi Berhasil");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 18));
@@ -38,46 +37,53 @@ public class RiwayatBooking extends JFrame {
 
         add(topPanel, BorderLayout.NORTH);
 
-        // =================================================================
-        // 2. PANEL TENGAH (TABEL DATA)
-        // =================================================================
-        // PERUBAHAN KOLOM SESUAI REQUEST:
-        // 1. "Status" diganti "Waktu Main" (Jam Mulai - Selesai)
-        // 2. Ditambah "Waktu Pembayaran" di akhir
+        // 2. PANEL TENGAH (TABEL)
         String[] columnNames = {
-                "ID Booking",
-                "Nama Lapangan",
-                "Tanggal Main",
-                "Waktu Main",      // Ex: "08:00 - 10:00"
-                "Total Bayar",
-                "Metode",
-                "Waktu Pembayaran" // Timestamp pembayaran dilakukan
+                "ID Booking", "Nama Lapangan", "Tanggal Main", "Waktu Main",
+                "Total Bayar", "Metode", "Waktu Pembayaran"
         };
 
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Data riwayat tidak bisa diedit langsung
+                return false;
+            }
+            // Tetap pertahankan ini agar sorting angka 10, 11, 12 benar (tidak jadi 1, 10, 11, 2)
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) return Integer.class;
+                return String.class;
             }
         };
 
         tableRiwayat = new JTable(tableModel);
-        tableRiwayat.setRowHeight(30); // Sedikit lebih tinggi biar rapi
+        tableRiwayat.setRowHeight(30);
+        tableRiwayat.setAutoCreateRowSorter(true); // Fitur Sorting Klik Header
 
-        // Atur lebar kolom agar proporsional
-        tableRiwayat.getColumnModel().getColumn(0).setPreferredWidth(50);  // ID
-        tableRiwayat.getColumnModel().getColumn(1).setPreferredWidth(150); // Nama Lapangan
-        tableRiwayat.getColumnModel().getColumn(3).setPreferredWidth(100); // Waktu Main
-        tableRiwayat.getColumnModel().getColumn(6).setPreferredWidth(150); // Waktu Pembayaran
+        // =================================================================
+        // --- SETTING ALIGNMENT (RATA TENGAH) UNTUK ID BOOKING ---
+        // =================================================================
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER); // Ubah jadi JLabel.LEFT jika ingin rata kiri
+
+        // Terapkan ke Kolom 0 (ID Booking)
+        tableRiwayat.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+
+        // Opsional: Terapkan juga ke Kolom lain biar rapi (Misal Tanggal & Waktu)
+        tableRiwayat.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // Tanggal
+        tableRiwayat.getColumnModel().getColumn(3).setCellRenderer(centerRenderer); // Waktu Main
+
+        // Atur Lebar Kolom
+        tableRiwayat.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tableRiwayat.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tableRiwayat.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tableRiwayat.getColumnModel().getColumn(6).setPreferredWidth(150);
 
         JScrollPane scrollPane = new JScrollPane(tableRiwayat);
         add(scrollPane, BorderLayout.CENTER);
 
-        // =================================================================
         // 3. PANEL BAWAH
-        // =================================================================
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-
         btnRefresh = new JButton("Refresh Data");
         btnRefresh.setBackground(new Color(52, 152, 219));
         btnRefresh.setForeground(Color.WHITE);
