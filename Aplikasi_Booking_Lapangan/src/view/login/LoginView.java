@@ -8,6 +8,7 @@ public class LoginView extends JFrame {
     private JTextField txtEmail;
     private JPasswordField txtPassword;
     private JButton btnLogin;
+    private JButton btnRegister;
 
     // Constructor tetap sama seperti sebelumnya...
     public LoginView() {
@@ -48,9 +49,24 @@ public class LoginView extends JFrame {
         btnLogin.setForeground(Color.WHITE);
         gbc.gridy = 3; gbc.gridx = 0; gbc.gridwidth = 2;
         add(btnLogin, gbc);
+
+        // tombol register
+        btnRegister = new JButton("Belum punya akun? Daftar disini");
+        btnRegister.setBorderPainted(false);
+        btnRegister.setContentAreaFilled(false);
+        btnRegister.setFocusPainted(false);
+        btnRegister.setForeground(Color.BLUE);
+        btnRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        // layout tombol register
+        gbc.gridy = 4;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        add(btnRegister, gbc);
     }
 
     public String getEmail() { return txtEmail.getText().trim(); }
     public String getPassword() { return new String(txtPassword.getPassword()); }
     public JButton getBtnLogin() { return btnLogin; }
+    public JButton getBtnRegister() { return btnRegister; }
 }

@@ -14,6 +14,7 @@ import view.lapangan.ManageFieldView;
 import view.lapangan.RiwayatBooking;
 import view.login.LoginView;
 import view.maintenance.MaintenanceView;
+import view.register.RegisterView;
 
 import javax.swing.*;
 
@@ -28,8 +29,18 @@ public class LoginController {
 
         // Listener Tombol
         this.loginView.getBtnLogin().addActionListener(e -> processLogin());
+
+        initController();
     }
 
+    private void initController() {
+        loginView.getBtnLogin().addActionListener(e -> processLogin());
+        loginView.getBtnRegister().addActionListener(e -> {
+            RegisterView regView = new RegisterView();
+            new RegisterController(regView);
+            regView.setVisible(true);
+        });
+    }
     private void processLogin() {
         String email = loginView.getEmail();
         String pass = loginView.getPassword();
