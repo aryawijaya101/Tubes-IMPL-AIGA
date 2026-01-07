@@ -113,7 +113,8 @@ public class DaftarLapnganMember extends JFrame {
                     int fieldId = Integer.parseInt(tableLapangan.getValueAt(selectedRow, 0).toString());
                     String fieldName = tableLapangan.getValueAt(selectedRow, 1).toString();
                     String hargaStr = tableLapangan.getValueAt(selectedRow, 4).toString();
-                    double price = Double.parseDouble(hargaStr);
+                    String hargaBersih = hargaStr.replaceAll("[^0-9]", ""); // Regex: Hapus selain angka
+                    double price = Double.parseDouble(hargaBersih);
 
                     // 1. Buat View
                     PembayaranLapangan paymentPage = new PembayaranLapangan(fieldId, fieldName, price);

@@ -27,9 +27,6 @@ public class LoginController {
         this.loginView = view;
         this.loginDAO = new LoginDAO();
 
-        // Listener Tombol
-        this.loginView.getBtnLogin().addActionListener(e -> processLogin());
-
         initController();
     }
 

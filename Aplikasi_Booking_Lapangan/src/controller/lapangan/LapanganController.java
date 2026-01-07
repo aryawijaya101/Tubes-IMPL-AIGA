@@ -38,7 +38,7 @@ public class LapanganController {
         view.getBtnDelete().addActionListener(e -> deleteLapangan());
         
         // Tombol Search
-        view.getBtnSearch().addActionListener(e -> searchLapangan());
+        view.getBtnSearch().addActionListener(e -> processSearch());
     }
 
     // LOAD DATA (READ)
@@ -168,5 +168,37 @@ public class LapanganController {
         // Di sini kita pakai cara simple reload data lalu filter manual di DAO (idealnya buat method search di DAO)
         // (Untuk MVP, refresh data saja sudah cukup jika search kosong)
         loadData();
+    }
+
+    private void processSearch() {
+        String keyword = view.getTxtSearch().getText().trim();
+
+        if (keyword.isEmpty()) {
+            loadData(); // Kalau kosong, tampilkan semua
+        } else {
+            // Panggil DAO cariLapangan yang sudah diperbaiki
+            List<Lapangan> list = dao.cariLapangan(keyword);
+            updateTable(list);
+        }
+    }
+
+    private void updateTable(List<Lapangan> list) {
+        DefaultTableModel model = view.getTableModel();
+        model.setRowCount(0); // Hapus data lama
+
+        for (Lapangan l : list) {
+            // PERBAIKAN: Tambahkan elemen ke-7 ("Booking")
+            // karena di ListFieldView ada 7 kolom (kolom terakhir adalah tombol)
+            Object[] row = {
+                    l.getFieldId(),
+                    l.getName(),
+                    l.getLocation(),
+                    l.getType(),
+                    String.format("%.0f", l.getPricePerHour()), // Format harga biar rapi
+                    l.getStatus(),
+                    "Booking" // <--- INI PENTING AGAR TOMBOL MUNCUL
+            };
+            model.addRow(row);
+        }
     }
 }
