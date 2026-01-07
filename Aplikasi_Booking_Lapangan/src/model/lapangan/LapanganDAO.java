@@ -133,10 +133,8 @@ public class LapanganDAO {
         return null;
     }
 
-    // === PERBAIKAN PADA METHOD INI ===
     public List<Lapangan> cariLapangan(String keyword) {
         List<Lapangan> list = new ArrayList<>();
-        // PERBAIKAN: Gunakan 'name_field' bukan 'name'
         String sql = "SELECT * FROM tbl_fields WHERE name_field LIKE ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -146,7 +144,6 @@ public class LapanganDAO {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                // PERBAIKAN: Gunakan nama kolom yang konsisten dengan tabel DB
                 Lapangan l = new Lapangan(
                         rs.getInt("field_id"),
                         rs.getString("name_field"),     // Sebelumnya: name

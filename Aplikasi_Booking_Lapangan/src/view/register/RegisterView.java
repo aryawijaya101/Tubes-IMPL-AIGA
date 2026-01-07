@@ -25,22 +25,22 @@ public class RegisterView extends JFrame {
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 15)); // 4 Baris (Nama, Email, Pass, HP)
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
-        // 1. Nama Lengkap
+        // Nama Lengkap
         formPanel.add(new JLabel("Nama Lengkap:"));
         txtNama = new JTextField();
         formPanel.add(txtNama);
 
-        // 2. Email
+        // Email
         formPanel.add(new JLabel("Email:"));
         txtEmail = new JTextField();
         formPanel.add(txtEmail);
 
-        // 3. Password
+        // Password
         formPanel.add(new JLabel("Password:"));
         txtPassword = new JPasswordField();
         formPanel.add(txtPassword);
 
-        // 4. No HP
+        // No HP
         formPanel.add(new JLabel("No. Handphone:"));
         txtPhone = new JTextField();
         formPanel.add(txtPhone);

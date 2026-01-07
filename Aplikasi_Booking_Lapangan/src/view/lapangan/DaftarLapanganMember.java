@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
-public class DaftarLapnganMember extends JFrame {
+public class DaftarLapanganMember extends JFrame {
 
     // VARIABEL USER
     private User currentUser;
@@ -20,7 +20,7 @@ public class DaftarLapnganMember extends JFrame {
     private JButton btnSearch;
 
     // UPDATE CONSTRUCTOR: TERIMA USER
-    public DaftarLapnganMember(User user) {
+    public DaftarLapanganMember(User user) {
         this.currentUser = user; // Simpan user yang login
 
         setTitle("Daftar Lapangan & Booking");

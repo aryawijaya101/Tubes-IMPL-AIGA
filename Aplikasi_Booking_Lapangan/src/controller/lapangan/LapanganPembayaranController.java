@@ -33,7 +33,7 @@ public class LapanganPembayaranController {
 
     private void processPayment() {
         try {
-            // 1. Ambil Data dari View
+            // Ambil Data dari View
             String dateStr = view.getDateInput(); // YYYY-MM-DD
             String startStr = view.getStartTime(); // HH:mm
             String endStr = view.getEndTime();     // HH:mm
@@ -45,7 +45,7 @@ public class LapanganPembayaranController {
                 return;
             }
 
-            // 2. Konversi Waktu
+            // Konversi Waktu
             SimpleDateFormat sdfFull = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date dateStart = sdfFull.parse(dateStr + " " + startStr);
             Date dateEnd = sdfFull.parse(dateStr + " " + endStr);
@@ -54,7 +54,7 @@ public class LapanganPembayaranController {
             Timestamp tsStart = new Timestamp(dateStart.getTime());
             Timestamp tsEnd = new Timestamp(dateEnd.getTime());
 
-            // 3. Buat Object Booking
+            // Buat Object Booking
             Booking newBooking = new Booking();
             newBooking.setUserId(currentUser.getUserId());
             newBooking.setFieldId(fieldId);
@@ -67,10 +67,10 @@ public class LapanganPembayaranController {
             // Simpan Booking
             if (bookingDAO.insertBooking(newBooking)) {
 
-                // 4. Ambil ID Booking yang baru dibuat
+                // Ambil ID Booking yang baru dibuat
                 int bookingId = bookingDAO.getLastBookingIdByUser(currentUser.getUserId());
 
-                // 5. Buat Object Pembayaran
+                // Buat Object Pembayaran
                 Pembayaran newPay = new Pembayaran();
                 newPay.setBookingId(bookingId);
                 newPay.setAmount(total);

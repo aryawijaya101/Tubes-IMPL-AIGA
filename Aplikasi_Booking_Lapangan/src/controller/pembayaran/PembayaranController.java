@@ -9,11 +9,11 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class pembayaranController {
+public class PembayaranController {
     private KelolaPembayaranView view;
     private PembayaranDAO dao;
 
-    public pembayaranController(KelolaPembayaranView view) {
+    public PembayaranController(KelolaPembayaranView view) {
         this.view = view;
         this.dao = new PembayaranDAO();
 
@@ -32,13 +32,13 @@ public class pembayaranController {
 
     private void cetakLaporan() {
         try {
-            // 1. Buat Header (Judul di atas kertas)
+            // Buat Header (Judul di atas kertas)
             MessageFormat header = new MessageFormat("Laporan Pemasukan Booking Lapangan");
 
-            // 2. Buat Footer (Nomor Halaman di bawah kertas)
+            // Buat Footer (Nomor Halaman di bawah kertas)
             MessageFormat footer = new MessageFormat("Halaman {0,number,integer}");
 
-            // 3. Perintah Print Bawaan JTable
+            // Perintah Print Bawaan JTable
             // Mode FIT_WIDTH agar semua kolom muat dalam satu kertas
             boolean complete = view.getTabelPembayaran().print(JTable.PrintMode.FIT_WIDTH, header, footer);
 
@@ -54,11 +54,11 @@ public class pembayaranController {
     }
 
     private void muatData() {
-        // 1. Ambil semua data dari DAO
+        // Ambil semua data dari DAO
         // Pastikan di PembayaranDAO nama methodnya sesuai (ambilSemuaPembayaran / getAllPayments)
         List<Pembayaran> daftarPembayaran = dao.getPembayaran();
 
-        // 2. Bersihkan tabel sebelum diisi ulang
+        // Bersihkan tabel sebelum diisi ulang
         view.getTableModel().setRowCount(0);
 
         // Format Tanggal (Contoh: 20-10-2025 14:30)
@@ -66,7 +66,7 @@ public class pembayaranController {
 
         double totalPemasukan = 0;
 
-        // 3. Loop data dan masukkan ke tabel
+        // Loop data dan masukkan ke tabel
         for (Pembayaran p : daftarPembayaran) {
 
             // Format Rupiah sederhana
@@ -83,12 +83,12 @@ public class pembayaranController {
 
             view.getTableModel().addRow(baris);
 
-            // 4. Hitung Total Pemasukan (Hanya yang statusnya Success/Completed jika perlu validasi)
+            // Hitung Total Pemasukan (Hanya yang statusnya Success/Completed jika perlu validasi)
             // Di sini kita hitung semua yang ada di list
             totalPemasukan += p.getAmount();
         }
 
-        // 5. Update Label Total di Pojok Kanan Atas View
+        // Update Label Total di Pojok Kanan Atas View
         String totalFormat = String.format("%,.0f", totalPemasukan);
         view.setTotalPemasukan("Total Masuk: Rp " + totalFormat);
     }

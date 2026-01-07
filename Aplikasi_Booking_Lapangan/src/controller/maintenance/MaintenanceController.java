@@ -81,7 +81,7 @@ public class MaintenanceController {
                 java.text.SimpleDateFormat sdfInput = new java.text.SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date utilDate = sdfInput.parse(dialog.getDateInput());
 
-                // KONVERSI: Util Date -> SQL Date
+                // KONVERSI Util Date -> SQL Date
                 Date sqlDate = new Date(utilDate.getTime());
 
                 // Masukkan sqlDate ke Constructor
@@ -143,7 +143,7 @@ public class MaintenanceController {
                 java.text.SimpleDateFormat sdfInput = new java.text.SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date utilDate = sdfInput.parse(dialog.getDateInput());
 
-                // KONVERSI: Util Date -> SQL Date
+                // KONVERSI Util Date -> SQL Date
                 Date sqlDate = new Date(utilDate.getTime());
 
                 Maintenance m = new Maintenance(

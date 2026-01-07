@@ -6,8 +6,7 @@ import model.entity.User;
 import model.user.UserDAO;
 import model.entity.Lapangan;
 import model.lapangan.LapanganDAO;
-import view.booking.ManageBookingView;
-import view.lapangan.RiwayatBooking;
+import view.booking.KelolaBookingView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,12 +15,12 @@ import java.util.List;
 
 public class BookingController {
     
-    private ManageBookingView view;
+    private KelolaBookingView view;
     private BookingDAO bookingDAO;
     private UserDAO userDAO;
     private LapanganDAO lapanganDAO;
 
-    public BookingController(ManageBookingView view) {
+    public BookingController(KelolaBookingView view) {
         this.view = view;
         this.bookingDAO = new BookingDAO();
         this.userDAO = new UserDAO();

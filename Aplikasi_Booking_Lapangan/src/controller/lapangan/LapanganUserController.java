@@ -2,16 +2,16 @@ package controller.lapangan;
 
 import model.entity.Lapangan;
 import model.lapangan.LapanganDAO;
-import view.lapangan.DaftarLapnganMember;
+import view.lapangan.DaftarLapanganMember;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 public class LapanganUserController {
-    private DaftarLapnganMember view;
+    private DaftarLapanganMember view;
     private LapanganDAO dao;
 
-    public LapanganUserController(DaftarLapnganMember view) {
+    public LapanganUserController(DaftarLapanganMember view) {
         this.view = view;
         this.dao = new LapanganDAO();
 
@@ -36,14 +36,14 @@ public class LapanganUserController {
         updateTable(list);
     }
 
-    // === PERBAIKAN LOGIC SEARCH ===
+    // LOGIC SEARCH
     private void processSearch() {
         String keyword = view.getTxtSearch().getText().trim();
 
         if (keyword.isEmpty()) {
             loadData(); // Kalau kosong, tampilkan semua
         } else {
-            // Panggil DAO cariLapangan yang sudah diperbaiki
+            // Panggil DAO cariLapangan
             List<Lapangan> list = dao.cariLapangan(keyword);
             updateTable(list);
         }
@@ -55,7 +55,7 @@ public class LapanganUserController {
         model.setRowCount(0); // Hapus data lama
 
         for (Lapangan l : list) {
-            // PERBAIKAN: Tambahkan elemen ke-7 ("Booking")
+            // ambahkan elemen ke-7 ("Booking")
             // karena di ListFieldView ada 7 kolom (kolom terakhir adalah tombol)
             Object[] row = {
                     l.getFieldId(),
@@ -64,7 +64,7 @@ public class LapanganUserController {
                     l.getType(),
                     String.format("%.0f", l.getPricePerHour()), // Format harga biar rapi
                     l.getStatus(),
-                    "Booking" // <--- INI PENTING AGAR TOMBOL MUNCUL
+                    "Booking" // INI AGAR TOMBOL MUNCUL
             };
             model.addRow(row);
         }

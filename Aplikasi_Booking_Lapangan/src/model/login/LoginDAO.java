@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class LoginDAO {
     public User login(String email, String password) {
         User user = null;
-        // Pastikan nama tabel sesuai database kamu (tbl_users)
+        // Pastikan nama tabel sesuai database
         String sql = "SELECT * FROM tbl_users WHERE email = ? AND password = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();

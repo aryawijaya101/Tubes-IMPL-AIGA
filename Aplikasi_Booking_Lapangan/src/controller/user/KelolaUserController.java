@@ -2,18 +2,18 @@ package controller.user;
 
 import model.user.UserDAO;
 import model.entity.User;
-import view.user.ManageUserView;
+import view.user.KelolaUserView;
 import view.user.UserFormDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
-public class ManageUserController {
-    private ManageUserView view; // <--- Ubah tipe data
+public class KelolaUserController {
+    private KelolaUserView view; // Ubah tipe data
     private UserDAO dao;
 
-    public ManageUserController(ManageUserView view) { // <--- Ubah parameter
+    public KelolaUserController(KelolaUserView view) { // Ubah parameter
         this.view = view;
         this.dao = new UserDAO();
 
@@ -29,7 +29,7 @@ public class ManageUserController {
         view.getBtnSearch().addActionListener(e -> searchUser());
     }
 
-    // --- LOGIC: LOAD DATA ---
+    // LOGIC LOAD DATA
     private void loadData() {
         List<User> list = dao.getAllUsers();
         DefaultTableModel model = view.getTableModel();
@@ -42,7 +42,7 @@ public class ManageUserController {
         }
     }
 
-    // --- LOGIC: TAMBAH USER ---
+    // LOGIC TAMBAH USER
     private void addUser() {
         UserFormDialog dialog = new UserFormDialog(view);
         dialog.setTitle("Tambah User Baru");
@@ -63,7 +63,7 @@ public class ManageUserController {
         }
     }
 
-    // --- LOGIC: EDIT USER ---
+    // LOGIC EDIT USER
     private void editUser() {
         int row = view.getTableUser().getSelectedRow();
         if (row == -1) {
@@ -98,7 +98,7 @@ public class ManageUserController {
         }
     }
 
-    // --- LOGIC: HAPUS USER ---
+    // LOGIC HAPUS USER
     private void deleteUser() {
         int row = view.getTableUser().getSelectedRow();
         if (row == -1) {
@@ -119,7 +119,7 @@ public class ManageUserController {
         }
     }
 
-    // --- LOGIC: SEARCH ---
+    // LOGIC SEARCH
     private void searchUser() {
         String keyword = view.getTxtSearch().getText().toLowerCase();
         // (Bisa implementasi filter manual di sini jika mau)

@@ -5,12 +5,13 @@ import controller.booking.RiwayatBookingController;
 import controller.lapangan.LapanganController;
 import controller.lapangan.LapanganUserController;
 import controller.maintenance.MaintenanceController;
+import controller.pembayaran.PembayaranController;
 import model.entity.User;
 import model.login.LoginDAO;
 import view.MainDashboard;
-import view.booking.ManageBookingView;
-import view.lapangan.DaftarLapnganMember;
-import view.lapangan.ManageFieldView;
+import view.booking.KelolaBookingView;
+import view.lapangan.DaftarLapanganMember;
+import view.lapangan.KelolaLapanganView;
 import view.lapangan.RiwayatBooking;
 import view.login.LoginView;
 import view.maintenance.MaintenanceView;
@@ -62,18 +63,18 @@ public class LoginController {
         MainDashboard dashboard = new MainDashboard(user);
         dashboard.setVisible(true);
 
-        // --- LOGIC TOMBOL DASHBOARD ---
+        // LOGIC TOMBOL DASHBOARD
 
-        // 1. Lapangan (Admin/Owner)
+        // Lapangan (Admin/Owner)
         if (dashboard.getBtnKelolaLapangan() != null) {
             dashboard.getBtnKelolaLapangan().addActionListener(e -> {
-                ManageFieldView view = new ManageFieldView();
+                KelolaLapanganView view = new KelolaLapanganView();
                 new LapanganController(view);
                 view.setVisible(true);
             });
         }
 
-        // 2. Jadwal (Admin/Owner)
+        // Jadwal (Admin/Owner)
         if (dashboard.getBtnKelolaJadwal() != null) {
             dashboard.getBtnKelolaJadwal().addActionListener(e -> {
                 MaintenanceView view = new MaintenanceView();
@@ -82,10 +83,10 @@ public class LoginController {
             });
         }
 
-        // 3. Booking (Admin)
+        // Booking (Admin)
         if (dashboard.getBtnKelolaBooking() != null) {
             dashboard.getBtnKelolaBooking().addActionListener(e -> {
-                ManageBookingView view = new ManageBookingView();
+                KelolaBookingView view = new KelolaBookingView();
                 new BookingController(view);
                 view.setVisible(true);
             });
@@ -95,19 +96,19 @@ public class LoginController {
         if (dashboard.getBtnTampilkanListLapangan() != null) {
             dashboard.getBtnTampilkanListLapangan().addActionListener(e -> {
                 // UPDATE DI SINI: Masukkan 'user' ke dalam constructor
-                DaftarLapnganMember view = new DaftarLapnganMember(user);
+                DaftarLapanganMember view = new DaftarLapanganMember(user);
 
                 new LapanganUserController(view); // Pastikan ini tidak error
                 view.setVisible(true);
             });
         }
 
-        // 5. Tampilan Riwayat Booking (INI YANG DIPERBAIKI)
+        // Tampilan Riwayat Booking
         if (dashboard.getBtnTampilkanRiwayatBooking() != null) {
             dashboard.getBtnTampilkanRiwayatBooking().addActionListener(e -> {
                 RiwayatBooking view = new RiwayatBooking();
 
-                // PERBAIKAN: Tambahkan parameter 'user' di sini
+                // Tambahkan parameter 'user' di sini
                 // Agar controller tahu history milik siapa yang harus diambil
                 new RiwayatBookingController(view, user);
 
@@ -115,7 +116,7 @@ public class LoginController {
             });
         }
 
-        // 6. Logout
+        // Logout
         dashboard.getBtnLogout().addActionListener(e -> {
             dashboard.dispose();
             LoginView newLoginView = new LoginView();
@@ -127,7 +128,7 @@ public class LoginController {
             dashboard.getBtnKelolaPembayaran().addActionListener(e -> {
                 // Panggil View dan Controller Pembayaran
                 view.pembayaran.KelolaPembayaranView view = new view.pembayaran.KelolaPembayaranView();
-                new controller.pembayaran.pembayaranController(view);
+                new PembayaranController(view);
                 view.setVisible(true);
             });
         }

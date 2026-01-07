@@ -6,7 +6,7 @@ import java.awt.*;
 /**
 * Dialog (Jendela Kecil) untuk Input Data Lapangan Baru atau Edit.
 */
-public class FieldFormDialog extends JDialog {
+public class LapanganFormDialog extends JDialog {
     private JTextField txtNama;
     private JTextField txtLokasi;
     private JComboBox<String> comboTipe;
@@ -17,7 +17,7 @@ public class FieldFormDialog extends JDialog {
     
     private boolean succeeded; // Penanda apakah user klik Save atau Cancel
 
-    public FieldFormDialog(Frame parent) {
+    public LapanganFormDialog(Frame parent) {
         super(parent, "Form Data Lapangan", true); // true = Modal (User gabisa klik belakang sebelum ini nutup)
         
         JPanel panel = new JPanel(new GridLayout(6, 2, 10, 10)); // Grid layout 6 baris 2 kolom

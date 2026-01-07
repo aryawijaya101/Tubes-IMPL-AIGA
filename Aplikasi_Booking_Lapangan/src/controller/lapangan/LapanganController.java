@@ -2,18 +2,18 @@ package controller.lapangan;
 
 import model.entity.Lapangan;
 import model.lapangan.LapanganDAO;
-import view.lapangan.ManageFieldView;
-import view.lapangan.FieldFormDialog;
+import view.lapangan.KelolaLapanganView;
+import view.lapangan.LapanganFormDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 public class LapanganController {
-    private ManageFieldView view;
+    private KelolaLapanganView view;
     private LapanganDAO dao;
 
-    public LapanganController(ManageFieldView view) {
+    public LapanganController(KelolaLapanganView view) {
         this.view = view;
         this.dao = new LapanganDAO();
 
@@ -67,7 +67,7 @@ public class LapanganController {
     // TAMBAH DATA (CREATE)
     private void showAddDialog() {
         // Buka dialog form
-        FieldFormDialog dialog = new FieldFormDialog(view);
+        LapanganFormDialog dialog = new LapanganFormDialog(view);
         dialog.setVisible(true);
 
         // Setelah dialog ditutup, cek apakah user klik 'Simpan'
@@ -110,7 +110,7 @@ public class LapanganController {
         String status = (String) view.getTableLapangan().getValueAt(selectedRow, 5);
 
         // Buka dialog dan isi datanya
-        FieldFormDialog dialog = new FieldFormDialog(view);
+        LapanganFormDialog dialog = new LapanganFormDialog(view);
         dialog.setNama(nama);
         dialog.setLokasi(lokasi);
         dialog.setTipe(tipe);
@@ -187,7 +187,7 @@ public class LapanganController {
         model.setRowCount(0); // Hapus data lama
 
         for (Lapangan l : list) {
-            // PERBAIKAN: Tambahkan elemen ke-7 ("Booking")
+            // Tambahkan elemen ke-7 ("Booking")
             // karena di ListFieldView ada 7 kolom (kolom terakhir adalah tombol)
             Object[] row = {
                     l.getFieldId(),
@@ -196,7 +196,7 @@ public class LapanganController {
                     l.getType(),
                     String.format("%.0f", l.getPricePerHour()), // Format harga biar rapi
                     l.getStatus(),
-                    "Booking" // <--- INI PENTING AGAR TOMBOL MUNCUL
+                    "Booking" // INI AGAR TOMBOL MUNCUL
             };
             model.addRow(row);
         }

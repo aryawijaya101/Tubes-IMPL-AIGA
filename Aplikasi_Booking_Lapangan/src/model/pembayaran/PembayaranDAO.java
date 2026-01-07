@@ -11,7 +11,6 @@ public class PembayaranDAO {
     // Ambil data pembayaran berdasarkan ID Booking
     public Pembayaran getPembayaranByBookingId(int bookingId) {
         String sql = "SELECT * FROM tbl_payments WHERE booking_id = ?";
-        // Pastikan nama tabel di DB kamu 'tbl_payments' atau 'tbl_pembayaran'
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

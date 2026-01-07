@@ -8,10 +8,9 @@ import database.DatabaseConnection;
 import model.entity.User;
 
 public class UserDAO {
-    // 1. GET ALL USERS (Untuk ditampilkan di Tabel)
+    // GET ALL USERS (Untuk ditampilkan di Tabel)
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
-        // Pastikan nama tabel sesuai database kamu (tbl_users)
         String sql = "SELECT * FROM tbl_users ORDER BY user_id ASC";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -35,7 +34,7 @@ public class UserDAO {
         return list;
     }
 
-    // 2. INSERT USER (Tambah User Baru)
+    // INSERT USER (Tambah User Baru)
     public boolean insertUser(User user) {
         String sql = "INSERT INTO tbl_users (nama_lengkap, email, password, phone, role) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -54,7 +53,7 @@ public class UserDAO {
         }
     }
 
-    // 3. UPDATE USER (Edit Data)
+    // UPDATE USER (Edit Data)
     public boolean updateUser(User user) {
         // Kita tidak update password di sini agar aman, kecuali mau fitur reset password terpisah
         String sql = "UPDATE tbl_users SET nama_lengkap=?, email=?, phone=?, role=? WHERE user_id=?";
@@ -74,7 +73,7 @@ public class UserDAO {
         }
     }
 
-    // 4. DELETE USER (Hapus User)
+    // DELETE USER (Hapus User)
     public boolean deleteUser(int userId) {
         String sql = "DELETE FROM tbl_users WHERE user_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -88,7 +87,7 @@ public class UserDAO {
         }
     }
 
-    // 5. GET USER BY ID (Untuk Relasi)
+    // GET USER BY ID (Untuk Relasi)
     public User getUserById(int userId) {
         String sql = "SELECT * FROM tbl_users WHERE user_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();

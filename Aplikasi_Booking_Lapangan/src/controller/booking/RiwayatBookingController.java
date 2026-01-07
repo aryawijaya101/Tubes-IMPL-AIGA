@@ -44,7 +44,7 @@ public class RiwayatBookingController {
     }
 
     private void loadData() {
-        // 1. Ambil data Booking berdasarkan User yang login
+        // Ambil data Booking berdasarkan User yang login
         // (Pastikan method getBookingsByUser ada di BookingDAO)
         List<Booking> listBooking = bookingDAO.getBookingsByUser(currentUser.getUserId());
 
@@ -56,11 +56,11 @@ public class RiwayatBookingController {
         SimpleDateFormat sdfLengkap = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
         for (Booking b : listBooking) {
-            // 2. Ambil Nama Lapangan (Relasi ke LapanganDAO)
+            // Ambil Nama Lapangan (Relasi ke LapanganDAO)
             Lapangan l = lapanganDAO.getLapanganById(b.getFieldId());
             String namaLapangan = (l != null) ? l.getName() : "Unknown Field";
 
-            // 3. Ambil Data Pembayaran (Relasi ke PembayaranDAO)
+            // Ambil Data Pembayaran (Relasi ke PembayaranDAO)
             Pembayaran p = pembayaranDAO.getPembayaranByBookingId(b.getBookingId());
 
             String metodeBayar = "-";
@@ -73,10 +73,10 @@ public class RiwayatBookingController {
                 }
             }
 
-            // 4. Format Waktu Main (Start - End)
+            // Format Waktu Main (Start - End)
             String waktuMain = sdfJam.format(b.getStartTime()) + " - " + sdfJam.format(b.getEndTime());
 
-            // 5. Masukkan ke Tabel sesuai urutan kolom di View
+            // Masukkan ke Tabel sesuai urutan kolom di View
             Object[] row = {
                     b.getBookingId(),
                     namaLapangan,
@@ -93,7 +93,7 @@ public class RiwayatBookingController {
     private void searchBooking() {
         String keyword = view.getTxtSearch().getText().toLowerCase();
 
-        // Logika simple: Load ulang semua, lalu hapus baris yang tidak cocok di tabel
+        // Load ulang semua, lalu hapus baris yang tidak cocok di tabel
         loadData();
 
         if (!keyword.isEmpty()) {

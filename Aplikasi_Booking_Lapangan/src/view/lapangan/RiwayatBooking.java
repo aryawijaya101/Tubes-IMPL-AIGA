@@ -21,7 +21,7 @@ public class RiwayatBooking extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // 1. PANEL ATAS
+        // PANEL ATAS
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel lblTitle = new JLabel("Daftar Transaksi Berhasil");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 18));
@@ -37,7 +37,7 @@ public class RiwayatBooking extends JFrame {
 
         add(topPanel, BorderLayout.NORTH);
 
-        // 2. PANEL TENGAH (TABEL)
+        // PANEL TENGAH (TABEL)
         String[] columnNames = {
                 "ID Booking", "Nama Lapangan", "Tanggal Main", "Waktu Main",
                 "Total Bayar", "Metode", "Waktu Pembayaran"
@@ -60,16 +60,14 @@ public class RiwayatBooking extends JFrame {
         tableRiwayat.setRowHeight(30);
         tableRiwayat.setAutoCreateRowSorter(true); // Fitur Sorting Klik Header
 
-        // =================================================================
-        // --- SETTING ALIGNMENT (RATA TENGAH) UNTUK ID BOOKING ---
-        // =================================================================
+        // SETTING ALIGNMENT (RATA TENGAH) UNTUK ID BOOKING
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER); // Ubah jadi JLabel.LEFT jika ingin rata kiri
 
         // Terapkan ke Kolom 0 (ID Booking)
         tableRiwayat.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 
-        // Opsional: Terapkan juga ke Kolom lain biar rapi (Misal Tanggal & Waktu)
+        // Terapkan juga ke Kolom lain biar rapi (Misal Tanggal & Waktu)
         tableRiwayat.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // Tanggal
         tableRiwayat.getColumnModel().getColumn(3).setCellRenderer(centerRenderer); // Waktu Main
 
@@ -82,7 +80,7 @@ public class RiwayatBooking extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tableRiwayat);
         add(scrollPane, BorderLayout.CENTER);
 
-        // 3. PANEL BAWAH
+        // PANEL BAWAH
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnRefresh = new JButton("Refresh Data");
         btnRefresh.setBackground(new Color(52, 152, 219));

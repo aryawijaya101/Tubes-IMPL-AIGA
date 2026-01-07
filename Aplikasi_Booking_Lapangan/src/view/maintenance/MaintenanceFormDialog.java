@@ -96,7 +96,6 @@ public class MaintenanceFormDialog extends JDialog {
 
     // Setter (Untuk Mode Edit)
     public void setSelectedField(int fieldId) {
-        // Helper sederhana:
         for (int i = 0; i < comboField.getItemCount(); i++) {
             Lapangan l = comboField.getItemAt(i);
             if (l.getFieldId() == fieldId) {

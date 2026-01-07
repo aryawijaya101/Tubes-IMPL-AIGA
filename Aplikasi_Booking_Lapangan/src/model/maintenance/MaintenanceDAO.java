@@ -12,7 +12,6 @@ import java.util.List;
 public class MaintenanceDAO {
     // CREATE (TAMBAH JADWAL MAINTENANCE BARU)
     public boolean insertMaintenance(Maintenance m) {
-        // Pastikan nama tabel sesuai DB kamu (misal: tbl_maintenances)
         String sql = "INSERT INTO tbl_maintenaces (field_id, scheduled_date, description, status_maintenace) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = DatabaseConnection.getConnection();
@@ -93,7 +92,7 @@ public class MaintenanceDAO {
         }
     }
     
-    // Cek Bentrok Jadwal (Opsional tapi Bagus)
+    // Cek Bentrok Jadwal
     public boolean isScheduleClash(int fieldId, java.util.Date date) {
         String sql = "SELECT maintenace_id FROM tbl_maintenaces WHERE field_id = ? AND scheduled_date = ?";
         try (Connection conn = DatabaseConnection.getConnection();

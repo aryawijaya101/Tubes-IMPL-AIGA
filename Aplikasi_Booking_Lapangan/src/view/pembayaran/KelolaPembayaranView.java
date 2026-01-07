@@ -18,9 +18,7 @@ public class KelolaPembayaranView extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // =================================================================
-        // 1. PANEL ATAS (JUDUL & TOTAL)
-        // =================================================================
+        // PANEL ATAS (JUDUL & TOTAL)
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
         topPanel.setBackground(new Color(245, 245, 245));
@@ -36,9 +34,7 @@ public class KelolaPembayaranView extends JFrame {
         topPanel.add(lblTotalPemasukan, BorderLayout.EAST);
         add(topPanel, BorderLayout.NORTH);
 
-        // =================================================================
-        // 2. PANEL TENGAH (TABEL)
-        // =================================================================
+        // PANEL TENGAH (TABEL)
         // Kolom disesuaikan dengan Entity Pembayaran
         String[] kolom = {"ID Bayar", "ID Booking", "Tanggal Bayar", "Metode", "Status", "Jumlah (Rp)"};
 
@@ -60,9 +56,7 @@ public class KelolaPembayaranView extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tabelPembayaran);
         add(scrollPane, BorderLayout.CENTER);
 
-        // =================================================================
-        // 3. PANEL BAWAH (TOMBOL)
-        // =================================================================
+        // PANEL BAWAH (TOMBOL)
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnRefresh = new JButton("Refresh Data");
         btnRefresh.setBackground(new Color(52, 152, 219));
@@ -77,7 +71,7 @@ public class KelolaPembayaranView extends JFrame {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    // GETTER (PENTING: Agar Controller bisa akses komponen ini)
+    // GETTER (Agar Controller bisa akses komponen ini)
     public DefaultTableModel getTableModel() { return tableModel; }
     public JButton getBtnRefresh() { return btnRefresh; }
 

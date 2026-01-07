@@ -42,7 +42,7 @@ public class PembayaranLapangan extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // 1. Nama Lapangan
+        // Nama Lapangan
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Nama Lapangan:"), gbc);
         txtFieldName = new JTextField(fieldName);
@@ -50,7 +50,7 @@ public class PembayaranLapangan extends JFrame {
         gbc.gridx = 1;
         formPanel.add(txtFieldName, gbc);
 
-        // 2. Harga
+        // Harga
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Harga / Jam:"), gbc);
         txtPrice = new JTextField(String.valueOf(pricePerHour));
@@ -58,14 +58,14 @@ public class PembayaranLapangan extends JFrame {
         gbc.gridx = 1;
         formPanel.add(txtPrice, gbc);
 
-        // 3. Tanggal
+        // Tanggal
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Tanggal (YYYY-MM-DD):"), gbc);
         txtDate = new JTextField(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         gbc.gridx = 1;
         formPanel.add(txtDate, gbc);
 
-        // 4. Jam
+        // Jam
         gbc.gridx = 0; gbc.gridy = 3;
         formPanel.add(new JLabel("Jam Mulai:"), gbc);
         String[] hours = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"};
@@ -80,7 +80,7 @@ public class PembayaranLapangan extends JFrame {
         gbc.gridx = 1;
         formPanel.add(comboEndTime, gbc);
 
-        // 5. Metode
+        // Metode
         gbc.gridx = 0; gbc.gridy = 5;
         formPanel.add(new JLabel("Metode Pembayaran:"), gbc);
         String[] methods = {"Transfer", "e-Wallet", "Cash", "Debit Card", "QR"};
@@ -88,7 +88,7 @@ public class PembayaranLapangan extends JFrame {
         gbc.gridx = 1;
         formPanel.add(comboPaymentMethod, gbc);
 
-        // 6. Total
+        // Total
         gbc.gridx = 0; gbc.gridy = 6;
         formPanel.add(new JLabel("Total Pembayaran:"), gbc);
         lblTotalAmount = new JLabel("Rp 0");
@@ -113,7 +113,7 @@ public class PembayaranLapangan extends JFrame {
         buttonPanel.add(btnCancel);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // --- EVENT LISTENER ---
+        // EVENT LISTENER
         comboStartTime.addActionListener(e -> calculateTotal());
         comboEndTime.addActionListener(e -> calculateTotal());
         calculateTotal();
@@ -142,7 +142,7 @@ public class PembayaranLapangan extends JFrame {
         }
     }
 
-    // --- GETTER UNTUK CONTROLLER ---
+    //  GETTER UNTUK CONTROLLER
     public String getDateInput() { return txtDate.getText(); }
     public String getStartTime() { return (String) comboStartTime.getSelectedItem(); }
     public String getEndTime() { return (String) comboEndTime.getSelectedItem(); }

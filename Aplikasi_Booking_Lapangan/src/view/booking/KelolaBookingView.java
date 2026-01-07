@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class ManageBookingView extends JFrame {
+public class KelolaBookingView extends JFrame {
 
     private JTable tableBooking;
     private DefaultTableModel tableModel;
@@ -12,7 +12,7 @@ public class ManageBookingView extends JFrame {
     private JComboBox<String> comboFilterStatus;
     private JButton btnFilter;
 
-    public ManageBookingView() {
+    public KelolaBookingView() {
         setTitle("Kelola Data Booking (Admin)");
         setSize(1000, 600); // Lebih lebar karena kolomnya banyak
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -62,7 +62,7 @@ public class ManageBookingView extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tableBooking);
         add(scrollPane, BorderLayout.CENTER);
 
-        // 3. PANEL BAWAH (TOMBOL AKSI)
+        // PANEL BAWAH (TOMBOL AKSI)
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         
         btnRefresh = new JButton("Refresh Data");

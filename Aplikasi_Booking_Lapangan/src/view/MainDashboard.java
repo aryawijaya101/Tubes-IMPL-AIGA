@@ -38,7 +38,7 @@ public class MainDashboard extends JFrame {
         btnLogout.setBackground(Color.RED);
         btnLogout.setForeground(Color.WHITE);
 
-//        MEMBER
+        // MEMBER
         btnTampilkanListLapangan = new JButton("Tampilkan Daftar Lapangan");
         btnTampilkanRiwayatBooking = new JButton("Tampilkan Riwayat Booking");
 

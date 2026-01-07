@@ -31,7 +31,7 @@ public class BookingDAO {
         }
     }
 
-    // --- TAMBAHAN PENTING: AMBIL ID BOOKING TERAKHIR ---
+    // AMBIL ID BOOKING TERAKHIR
     public int getLastBookingIdByUser(int userId) {
         String sql = "SELECT MAX(booking_id) as last_id FROM tbl_bookings WHERE user_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
