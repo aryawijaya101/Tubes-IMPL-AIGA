@@ -31,7 +31,7 @@ public class BookingDAO {
         }
     }
 
-    // --- TAMBAHAN PENTING: AMBIL ID BOOKING TERAKHIR ---
+    // AMBIL ID BOOKING TERAKHIR
     public int getLastBookingIdByUser(int userId) {
         String sql = "SELECT MAX(booking_id) as last_id FROM tbl_bookings WHERE user_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -43,6 +43,23 @@ public class BookingDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public int getFieldIdByBookingId(int bookingId) {
+        String sql = "SELECT field_id FROM tbl_bookings WHERE booking_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("field_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0; // Gagal / Tidak ketemu
     }
 
     // CHECK AVAILABILITY

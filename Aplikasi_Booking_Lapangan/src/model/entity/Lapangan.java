@@ -45,5 +45,8 @@ public class Lapangan {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-
+    @Override
+    public String toString() {
+        return this.name; // Atau variable nama lapangan Anda (misal: name_field / nama)
+    }
 }

@@ -65,35 +65,52 @@ public class MaintenanceController {
     // TAMBAH DATA (CREATE)
     private void showAddDialog() {
         MaintenanceFormDialog dialog = new MaintenanceFormDialog(view);
-        
-        // ISI COMBOBOX dengan Data Lapangan dari Database
+
+        // 1. Ambil Semua Lapangan dari Database
         List<Lapangan> fields = lapanganDAO.getAllLapangan();
+
+        // 2. Bersihkan ComboBox dulu agar kosong
+        dialog.getComboField().removeAllItems();
+
+        // 3. Looping dan Filter: Hanya masukkan lapangan yang Available atau Maintenance
         for (Lapangan l : fields) {
-            dialog.getComboField().addItem(l);
-            // Karena di Lapangan.java ada toString(), otomatis yang muncul adalah Namanya
+            // Logika Filter: Jangan tampilkan lapangan yang sedang di-Booking orang
+            if (l.getStatus().equalsIgnoreCase("Available") ||
+                    l.getStatus().equalsIgnoreCase("Maintenance")) {
+
+                // Masukkan objek Lapangan ke ComboBox.
+                // Karena Anda sudah menambahkan toString() di Entity Lapangan,
+                // maka yang muncul di layar adalah Nama Lapangannya.
+                dialog.getComboField().addItem(l);
+            }
         }
 
         dialog.setVisible(true);
 
         if (dialog.isSucceeded()) {
             try {
-                // Parsing String ke Util Date dulu (Format Java Biasa)
+                // Parsing String ke Util Date (yyyy-MM-dd)
                 java.text.SimpleDateFormat sdfInput = new java.text.SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date utilDate = sdfInput.parse(dialog.getDateInput());
 
-                // KONVERSI: Util Date -> SQL Date
+                // Konversi ke SQL Date
                 Date sqlDate = new Date(utilDate.getTime());
 
-                // Masukkan sqlDate ke Constructor
+                // Buat Objek Maintenance Baru
+                // (Pastikan Constructor Maintenance sesuai: id, fieldId, date, description, status)
                 Maintenance m = new Maintenance(
-                    dialog.getSelectedField().getFieldId(),
-                    sqlDate,
-                    dialog.getDescription()
+                        0, // ID 0 karena Auto Increment
+                        dialog.getSelectedField().getFieldId(),
+                        sqlDate,
+                        dialog.getDescription(),
+                        dialog.getStatus()
                 );
-                m.setStatus(dialog.getStatus());
 
-                // Simpan
+                // Simpan ke Database
                 if (maintenanceDAO.insertMaintenance(m)) {
+                    // OPTIONAL: Update status lapangan jadi "Maintenance" juga
+                    lapanganDAO.updateStatusLapangan(dialog.getSelectedField().getFieldId(), "Maintenance");
+
                     JOptionPane.showMessageDialog(view, "Jadwal berhasil disimpan!");
                     loadData();
                 } else {
@@ -101,6 +118,10 @@ public class MaintenanceController {
                 }
             } catch (ParseException e) {
                 JOptionPane.showMessageDialog(view, "Format Tanggal Salah! Gunakan YYYY-MM-DD (Contoh: 2025-12-31)", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                // Tangkap error lain (misal Constructor beda)
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(view, "Terjadi Kesalahan: " + e.getMessage());
             }
         }
     }
@@ -117,18 +138,18 @@ public class MaintenanceController {
         int id = (int) view.getTableMaintenance().getValueAt(selectedRow, 0);
         String currentDesc = (String) view.getTableMaintenance().getValueAt(selectedRow, 3);
         String currentStatus = (String) view.getTableMaintenance().getValueAt(selectedRow, 4);
-        
+
         // Untuk tanggal dan fieldId, idealnya kita ambil object aslinya lagi dari list/dao
         // Tapi untuk simpel, kita minta user isi ulang atau kita parse dari tabel
-        
+
         MaintenanceFormDialog dialog = new MaintenanceFormDialog(view);
-        
+
         // Isi ComboBox Lapangan
         List<Lapangan> fields = lapanganDAO.getAllLapangan();
         for (Lapangan l : fields) {
             dialog.getComboField().addItem(l);
         }
-        
+
         // Set Data Lama ke Form
         dialog.setDescription(currentDesc);
         dialog.setStatus(currentStatus);
@@ -189,10 +210,10 @@ public class MaintenanceController {
     // FILTER / SEARCH
     private void filterData() {
         String keyword = view.getTxtSearch().getText().toLowerCase();
-        
+
         // Ambil semua data dari DAO
         List<Maintenance> list = maintenanceDAO.getAllMaintenance();
-        
+
         // Bersihkan tabel
         DefaultTableModel model = view.getTableModel();
         model.setRowCount(0);
@@ -207,7 +228,7 @@ public class MaintenanceController {
             String status = (m.getStatus() != null) ? m.getStatus().toLowerCase() : "";
 
             if (deskripsi.contains(keyword) || status.contains(keyword)) {
-                
+
                 // Ambil Nama Lapangan (Sama seperti loadData)
                 Lapangan l = lapanganDAO.getLapanganById(m.getFieldId());
                 String namaLapangan = (l != null) ? l.getName() : "Unknown";

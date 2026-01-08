@@ -101,33 +101,48 @@ public class LapanganController {
             return;
         }
 
+        // Ambil data lama dari tabel
         int id = (int) view.getTableLapangan().getValueAt(selectedRow, 0);
         String nama = (String) view.getTableLapangan().getValueAt(selectedRow, 1);
         String lokasi = (String) view.getTableLapangan().getValueAt(selectedRow, 2);
         String tipe = (String) view.getTableLapangan().getValueAt(selectedRow, 3);
         double harga = Double.parseDouble(view.getTableLapangan().getValueAt(selectedRow, 4).toString());
-        String status = (String) view.getTableLapangan().getValueAt(selectedRow, 5);
+        String oldStatus = (String) view.getTableLapangan().getValueAt(selectedRow, 5); // Simpan Status Lama
 
+        // Buka Form Edit
         FieldFormDialog dialog = new FieldFormDialog(view);
         dialog.setNama(nama);
         dialog.setLokasi(lokasi);
         dialog.setTipe(tipe);
         dialog.setHarga(harga);
-        dialog.setStatus(status);
+        dialog.setStatus(oldStatus);
         dialog.setTitle("Edit Lapangan");
         dialog.setVisible(true);
 
         if (dialog.isSucceeded()) {
+            // Ambil Status Baru
+            String newStatus = dialog.getStatus();
+
             Lapangan l = new Lapangan(
                     id,
                     dialog.getNama(),
                     dialog.getLokasi(),
                     dialog.getTipe(),
                     dialog.getHarga(),
-                    dialog.getStatus()
+                    newStatus
             );
 
             if (dao.updateLapangan(l)) {
+                // LOGIKA OTOMATISASI SAAT EDIT
+
+                if (!oldStatus.equalsIgnoreCase("Maintenance") && newStatus.equalsIgnoreCase("Maintenance")) {
+                    addAutoMaintenance(id);
+                }
+
+                else if (!oldStatus.equalsIgnoreCase("Booked") && newStatus.equalsIgnoreCase("Booked")) {
+                    addAutoBooking(id, l.getPricePerHour());
+                }
+
                 JOptionPane.showMessageDialog(view, "Data berhasil diupdate!");
                 loadData();
             } else {

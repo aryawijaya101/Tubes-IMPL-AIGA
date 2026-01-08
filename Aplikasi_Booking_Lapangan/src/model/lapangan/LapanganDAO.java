@@ -108,23 +108,86 @@ public class LapanganDAO {
         }
     }
 
-    // DELETE
-    public boolean deleteLapangan(int fieldId) {
-        if (isLapanganBooked(fieldId)) {
-            System.err.println("Gagal Hapus: Lapangan sedang ada booking aktif!");
-            return false;
-        }
-
-        String sql = "DELETE FROM tbl_fields WHERE field_id = ?";
+    public boolean updateStatusLapangan(int fieldId, String newStatus) {
+        String sql = "UPDATE tbl_fields SET status_field = ? WHERE field_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, fieldId);
+            ps.setString(1, newStatus);
+            ps.setInt(2, fieldId);
+
             return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error Update Status Lapangan: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // DELETE
+    public boolean deleteLapangan(int fieldId) {
+        Connection conn = null;
+        PreparedStatement psBooking = null;
+        PreparedStatement psMaint = null;
+        PreparedStatement psReview = null;
+        PreparedStatement psField = null;
+
+        try {
+            conn = DatabaseConnection.getConnection();
+
+            // 1. Matikan Auto Commit untuk memulai Transaksi
+            // (Agar kalau gagal di tengah, tidak ada data yang terhapus setengah-setengah)
+            conn.setAutoCommit(false);
+
+            // 2. Hapus Data Booking Terkait (Semua status: Pending, Confirmed, Completed, Cancelled)
+            String sqlBooking = "DELETE FROM tbl_bookings WHERE field_id = ?";
+            psBooking = conn.prepareStatement(sqlBooking);
+            psBooking.setInt(1, fieldId);
+            psBooking.executeUpdate();
+
+            // 3. Hapus Data Maintenance Terkait (Jika tabel ada)
+            try {
+                String sqlMaint = "DELETE FROM tbl_maintenance WHERE field_id = ?";
+                psMaint = conn.prepareStatement(sqlMaint);
+                psMaint.setInt(1, fieldId);
+                psMaint.executeUpdate();
+            } catch (SQLException ignored) {
+                // Abaikan jika tabel maintenance belum dibuat/error
+            }
+
+            // 4. Hapus Data Review Terkait (Jika tabel ada)
+            try {
+                String sqlReview = "DELETE FROM tbl_reviews WHERE field_id = ?";
+                psReview = conn.prepareStatement(sqlReview);
+                psReview.setInt(1, fieldId);
+                psReview.executeUpdate();
+            } catch (SQLException ignored) {
+                // Abaikan jika tabel reviews belum dibuat
+            }
+
+            // 5. Hapus Data Lapangan Utama (Induknya)
+            String sqlField = "DELETE FROM tbl_fields WHERE field_id = ?";
+            psField = conn.prepareStatement(sqlField);
+            psField.setInt(1, fieldId);
+            int affected = psField.executeUpdate();
+
+            // 6. Simpan Perubahan Permanen
+            conn.commit();
+            return affected > 0;
 
         } catch (SQLException e) {
-            System.err.println("Error Delete Lapangan: " + e.getMessage());
+            // Jika ada error, batalkan semua penghapusan (Rollback)
+            if (conn != null) {
+                try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            }
+            System.err.println("Error Delete Lapangan Cascade: " + e.getMessage());
             return false;
+        } finally {
+            // Tutup semua resource manual
+            try { if (psBooking != null) psBooking.close(); } catch (Exception e) {}
+            try { if (psMaint != null) psMaint.close(); } catch (Exception e) {}
+            try { if (psReview != null) psReview.close(); } catch (Exception e) {}
+            try { if (psField != null) psField.close(); } catch (Exception e) {}
+            try { if (conn != null) { conn.setAutoCommit(true); conn.close(); } } catch (Exception e) {}
         }
     }
 
